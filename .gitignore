@@ -1,0 +1,12 @@
+build/
+
+node_modules
+client/node_modules
+
+api.code-workspace
+client.code-workspace
+
+trash
+
+.env
+client/.env

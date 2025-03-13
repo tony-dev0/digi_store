@@ -1,0 +1,22 @@
+/* 
+  Genral bootstrap react rules changes */
+.carousel-control-prev,.carousel-control-next {
+    display:none
+ }
+
+ #scr {
+  position: fixed;
+   z-index: 1001;
+   background: #2c3e50;
+  border-radius: 20px;
+  bottom: 1.25rem;
+  color: #fff;
+  font-size: 2.25rem;
+  height: 2.625rem;
+  line-height: 100%;
+  opacity: 0.5;
+  padding: 3px;
+  right: 1.25rem;
+  text-align: center;
+  width: 2.625rem;
+ }
