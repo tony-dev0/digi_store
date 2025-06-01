@@ -12,17 +12,20 @@ import { useEffect, useState } from 'react'
 
 export default function Inbox() {
   const d = Date.now()
-  const [data, setData] = useState<any>()
+  const [data, setData] = useState<any>(null)
   const { currentUser } = useSelector((state: any) => state.user)
 
   useEffect(() => {
     axios
       .get(`/api/notifications/out/${currentUser.email}`)
       .then((res: any) => {
-        setData(res.data)
+        if (res.data.length > 0) {
+          setData(res.data)
+        }
       })
-      .catch(() => {
+      .catch((err: any) => {
         toast.error('An error occurred')
+        console.log(err)
       })
   }, [])
 

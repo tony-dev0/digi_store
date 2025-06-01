@@ -2,6 +2,14 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+const date = Date.now();
+const options = {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+};
+const formatedDate = new Intl.DateTimeFormat("en-GB", options).format(date);
+
 //find user by email
 export const findemail = async (req, res, next) => {
   const newUser = new User(req.body);
@@ -16,14 +24,6 @@ export const findemail = async (req, res, next) => {
 
 // Register
 export const register = async (req, res, next) => {
-  const date = Date.now();
-  const options = {
-    year:'numeric',
-    month:'2-digit',
-    day:'2-digit'
-  }
-  const formatedDate = new Intl.DateTimeFormat('en-GB', options).format(date);
-
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(String(req.body.password), salt);
 
@@ -32,19 +32,19 @@ export const register = async (req, res, next) => {
     phone: String(req.body.phone),
     email: String(req.body.email),
     password: hash,
-    createdAt: formatedDate
+    createdAt: formatedDate,
   });
 
   const finduser = await User.findOne({ email: newUser.email });
   try {
     if (!finduser) {
-     const result = await User.insertMany([newUser]);
+      const result = await User.insertMany([newUser]);
       return res.json(result[0]._id);
     } else {
       throw new Error("Email already exist");
     }
   } catch (err) {
-    return res.status(500).json(err.message);
+    next(err);
   }
 };
 
@@ -84,13 +84,15 @@ export const google = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
+      console.log("user found");
       const token = jwt.sign({ id: user._id }, process.env.JWT);
       const { password: pass, ...rest } = user._doc;
       res.cookie("_actok", token, { httpOnly: true }).status(200).json(rest);
     } else {
+      console.log("tryng to generate password for user");
       const generatedPassword =
-        Math.random().toString(36).slice(-8) +
-        Math.random().toString(36).slice(-8);
+        Math.random().toString(36).slice(-9) +
+        Math.random().toString(36).slice(-9);
       const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
       const newUser = new User({
         username:
@@ -98,11 +100,14 @@ export const google = async (req, res, next) => {
           Math.random().toString(36).slice(-4),
         email: req.body.email,
         password: hashedPassword,
+        createdAt: formatedDate,
       });
+      console.log("user almost saved");
       await newUser.save();
       const token = jwt.sign({ id: newUser._id }, process.env.JWT);
       const { password, ...rest } = newUser._doc;
       res.cookie("_actok", token, { httpOnly: true }).status(200).json(rest);
+      console.log("completed operatiion");
     }
   } catch (error) {
     next(error);

@@ -1,28 +1,25 @@
-@import "/node_modules/@syncfusion/ej2-base/styles/material.css";
-@import "/node_modules/@syncfusion/ej2-buttons/styles/material.css";
-@import "/node_modules/@syncfusion/ej2-calendars/styles/material.css";
-@import "/node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
-@import "/node_modules/@syncfusion/ej2-inputs/styles/material.css";
-@import "/node_modules/@syncfusion/ej2-lists/styles/material.css";
-@import "/node_modules/@syncfusion/ej2-navigations/styles/material.css";
-@import "/node_modules/@syncfusion/ej2-popups/styles/material.css";
-@import "/node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
-@import "/node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
+@import '/node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '/node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '/node_modules/@syncfusion/ej2-calendars/styles/material.css';
+@import '/node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
+@import '/node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '/node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '/node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '/node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '/node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+@import '/node_modules/@syncfusion/ej2-react-schedule/styles/material.css';
 
 .css-2sr0h3-MuiFormControl-root-MuiTextField-root {
   margin-top: 16px;
   margin-bottom: 8px;
 }
-/* .nn {
-  position: relative;
-  height: 281px;
-} */
- .css-1p5jnm4-MuiResponsiveChart-container {
+
+.css-1p5jnm4-MuiResponsiveChart-container {
   height: 390px !important;
 }
 .css-iwe6dv-MuiResponsiveChart-container {
   height: 322px !important;
-} 
+}
 .css-1mnoz6i-MuiInputBase-root-MuiOutlinedInput-root {
   height: 3.5em;
 }
@@ -31,14 +28,19 @@
   color: #8280ae !important;
 }
 .MuiTabs-indicator.css-1qltlow-MuiTabs-indicator {
-background-color: #6e6aac;
+  background-color: #6e6aac;
 }
-.ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) 
-.modal-content {
+.ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable)
+  .modal-content {
   min-height: 200px;
 }
 
-tbody, td, tfoot, th, thead, tr {
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
   border-color: #d0d0d0;
   border-style: solid;
   border-width: 1px;
@@ -47,63 +49,80 @@ tr {
   color: #3b3b3b;
 }
 .schedule-component {
-display: flex;
-justify-content: center;
-align-items: center;
-min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 90vh; */
 }
-.toolbarx{
-    /* background: #161530; */
-    /* background: #8280ae; */
-    background: #403e68;
+.toolbarx {
+  /* background: #161530; */
+  /* background: #8280ae; */
+  background: #403e68;
 }
 .btn-customx {
-    background: #8280ae;
-    color:#ffffff;
+  background: #8280ae;
+  color: #ffffff;
 }
 .btn-customx:hover {
-color:#ffffff;
-background-color: #706dae;
+  color: #ffffff;
+  background-color: #706dae;
 }
-.productTitle{
+.productTitle {
   height: 30px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
-.priceSection h6{
-font-size: 12px !important;
+.priceSection h6 {
+  font-size: 12px !important;
 }
 @media (min-width: 768px) {
-    .logo-imagex {
-      width: 100px;
-      height: 28px;
-    }
+  .logo-imagex {
+    width: 100px;
+    height: 28px;
   }
-  @media (max-width: 767px) {
-    .containerx {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width:100%;
-    }
-    .logo-imagex {
-      width: 111px;
-      height: 30px;
-    }
+}
+@media (max-width: 992px) {
+  .main-container {
+    width: 99%;
   }
-  /* mui classes alteration */
+  .ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
+  .ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {
+    height: 300px;
+  }
+}
+
+@media (max-width: 767px) {
+  .css-y2ff7i-MuiPaper-root-MuiTableContainer-root {
+    width: 100% !important;
+  }
+  .mas {
+    margin-left: 10px;
+    width: 95vw;
+  }
+  .containerx {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .logo-imagex {
+    width: 111px;
+    height: 30px;
+  }
+}
+/* mui classes alteration */
 .css-4bx69l-MuiButtonBase-root-MuiListItemButton-root {
   padding-top: 13px !important;
   padding-bottom: 13px !important;
 }
-.MuiIconButton-root:hover{
-opacity:0.8;
+.MuiIconButton-root:hover {
+  opacity: 0.8;
 }
 a:hover {
-  color:#8280ae;
+  color: #8280ae;
 }
-.MuiBox-root.css-1v5u2yv{
+.MuiBox-root.css-1v5u2yv {
   /* padding: 0 !important; */
-  padding:0; 
+  padding: 0;
   background: #f3f2f2;
 }
 
@@ -111,28 +130,40 @@ a:hover {
   background-color: #f2f2f2 !important;
 }
 .border-b-green {
-  border-bottom: 5px solid green;
+  /* border-bottom: 5px solid green; */
+  border-bottom: 5px solid #6e6aac;
 }
-.font-w-lg{
-font-weight: 600;
+.border-b-themed {
+  border-bottom: 5px solid #6e6aac;
+}
+.font-w-lg {
+  font-weight: 600;
 }
 .font-w-md {
   font-weight: 500;
 }
-.text-gray{
-color:gray;
-font-weight: 600;
+.text-gray {
+  color: gray;
+  font-weight: 600;
 }
 .title-head-user {
-  border-bottom: 3px solid green;
-  width:150px;
+  border-bottom: 3px solid #5f5b9a;
+  width: 150px;
   font-weight: 500;
+}
+.title-head-e {
+  border-bottom: 3px solid #5f5b9a;
+  width: 190px;
+  font-weight: 500;
+}
+.title-head-e p {
+  font-size: 18px !important;
 }
 .title-head-user p {
   font-size: 18px !important;
 }
 .ck.ck-sticky-panel .ck-sticky-panel__content_sticky {
-  z-index:0 !important;
+  z-index: 0 !important;
 }
 header.MuiPaper-root.MuiPaper-elevation {
   z-index: 100 !important;
@@ -140,12 +171,13 @@ header.MuiPaper-root.MuiPaper-elevation {
 .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
   height: 3.5em !important;
 }
-.even.MuiDataGrid-row, .odd.MuiDataGrid-row {
-  margin-top:0 !important;
+.even.MuiDataGrid-row,
+.odd.MuiDataGrid-row {
+  margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
 .MuiDataGrid-row:nth-child(even) {
-  background-color:rgb(245, 249, 253) !important;
+  background-color: rgb(245, 249, 253) !important;
 }
 .MuiDataGrid-row:nth-child(odd) {
   /* background-color: #bebce7 !important; */
@@ -153,7 +185,10 @@ header.MuiPaper-root.MuiPaper-elevation {
   /* background-color: #efefef !important; */
   /* background-color: #d5d2f7 !important; */
 }
-@media (min-width:991px) {
+@media (min-width: 991px) {
+  .css-y2ff7i-MuiPaper-root-MuiTableContainer-root {
+    width: 95% !important;
+  }
   #modaldefault .modal-content {
     overflow-y: auto;
     height: 92vh;
@@ -205,17 +240,18 @@ header.MuiPaper-root.MuiPaper-elevation {
 .file-input {
   display: none;
 }
-@media (max-width:630px) { 
+@media (max-width: 630px) {
   .userTable {
-    width: 91vw;
+    margin-top: 30px;
+    width: 96vw;
   }
 }
 .revmsgbox {
-  padding:5px;
+  padding: 5px;
   padding-left: 10px;
   padding-right: 10px;
   border: 1px solid grey;
-  box-shadow:rgba(0,0,0,0.35) 3px 3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 3px 3px 5px;
   border-radius: 10px;
   background-color: #ffffff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -232,19 +268,12 @@ header.MuiPaper-root.MuiPaper-elevation {
 }
 
 /* notify client */
-@media (min-width:990px) { 
+@media (min-width: 990px) {
   .notify-form {
-    /* width: 100%; */
-    /* display: flex;
-    justify-content: center; */
     padding-left: 20px;
     padding-right: 20px;
-    
-    width: 100%; 
+    width: 100%;
     border-radius: 10px;
-    /* border: 1px solid grey;
-    border-radius: 10px;
-    box-shadow:rgba(0,0,0,0.35) 0px 3px 5px; */
   }
 }
 /* Sent Messages */
@@ -254,7 +283,7 @@ header.MuiPaper-root.MuiPaper-elevation {
 }
 .recipients-wrapper {
   margin-top: 10px;
-  display:inline-block
+  display: inline-block;
 }
 .recipients {
   border-radius: 10px;
@@ -263,11 +292,19 @@ header.MuiPaper-root.MuiPaper-elevation {
 }
 .rnbadge {
   top: -10px;
-  right:6px;
-  position:absolute;
+  right: 6px;
+  position: absolute;
   cursor: pointer;
-  opacity:0.5
+  opacity: 0.5;
 }
+
 .rnbadge:hover {
-opacity:0.9
+  opacity: 0.9;
+}
+
+.img-wrapper {
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
 }

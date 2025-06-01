@@ -22,7 +22,7 @@ export const Login = () => {
     setValues({ ...values, [e.target.name]: [e.target.value] })
   }
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     axios
       .post('/api/auth/login', values)
       .then((res) => {
@@ -30,10 +30,10 @@ export const Login = () => {
         if (res.data.login) {
           setTimeout(() => {
             dispatch(signInSuccess(res.data.details))
-          }, 2000);
+          }, 2000)
           setTimeout(() => {
             navigate('/')
-          }, 2500);
+          }, 2500)
         } else {
           dispatch(signInFailure(res.data.msg))
         }
@@ -56,7 +56,7 @@ export const Login = () => {
               <form className="form" onSubmit={handleSubmit}>
                 {error && (
                   <div className="alert alert-danger" role="alert">
-                  <small> {error} </small> 
+                    <small> {error} </small>
                   </div>
                 )}
                 <div className="inputBox">
@@ -92,7 +92,6 @@ export const Login = () => {
           </div>
         </div>
       </section>
-    
     </>
   )
 }

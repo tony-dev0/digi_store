@@ -14,6 +14,9 @@ const OrderSchema = new mongoose.Schema({
   products: {
     type: [OrderProduct.schema],
   },
+  status: {
+    type: String,
+  },
 });
 
 export default mongoose.model("Order", OrderSchema, "orders");

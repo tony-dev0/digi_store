@@ -21,26 +21,8 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
-      // scss config start
-      // {
-      //   test: /\.module\.(sa|sc|c)ss$/,
-      //   use: [
-      //     'style-loader',
-      //     {
-      //       loader: 'css-loader',
-      //       options: { modules: true }
-      //     },
-      //     'sass-loader'
-      //   ]
-      // },
-      // {
-      //   test: /\.(sa|sc|c)ss$/,
-      //   exclude: /\.module\.(sa|sc|c)ss$/,
-      //   use: ['style-loader', 'css-loader', 'sass-loader']
-      // },
-      // // scss config end
       {
-       test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+        test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
         type: 'asset/resource',
       },
       {
@@ -52,7 +34,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '..', './build'),
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   devServer: {
     historyApiFallback: true,

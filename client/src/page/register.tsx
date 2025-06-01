@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
@@ -24,7 +24,7 @@ const schema = z
 type FormFields = z.infer<typeof schema>
 
 export const Register: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -42,8 +42,8 @@ export const Register: React.FC = () => {
         phone: data.phone,
         password: data.password,
       })
-      .then((msg: any) => {
-        toast.success(msg.data || 'Account Created Successfully')
+      .then(() => {
+        toast.success('Account Created Successfully')
         navigate('/login')
       })
       .catch((error) => {
@@ -56,7 +56,7 @@ export const Register: React.FC = () => {
         <div className="section">
           <div className="signin">
             <div className="content">
-              <div className="img">
+              <div className="mt-5 img">
                 <img src={logo} alt="" />
               </div>
               <h2>Sign Up</h2>
@@ -80,7 +80,7 @@ export const Register: React.FC = () => {
                   )}
                 </div>
 
-                {/* autocomplete try set it to off using zod of default form */}
+                {/* autocomplete try set it to false (zod)*/}
                 <div className="inputBox">
                   <input
                     {...register('email')}

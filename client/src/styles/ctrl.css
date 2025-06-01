@@ -1,13 +1,31 @@
 /* 
   Genral bootstrap react rules changes */
-.carousel-control-prev,.carousel-control-next {
-    display:none
- }
+.carousel-control-prev,
+.carousel-control-next {
+  display: none;
+}
+.nav-tab-pill .nav .nav-item .nav-link .active {
+  color: green !important;
+}
+.action button {
+  width: 135px;
+}
+.nav-tab-slide .nav .nav-item .nav-link.active {
+  background-color: #e8e8e8;
+  color: #6d6b9f !important;
+  border-bottom: 1.5px solid #8d8bbb;
+}
+.nav-tab-slide .nav .nav-item .nav-link {
+  color: #000;
+}
 
- #scr {
+.nav-tab-pill .nav .nav-item .nav-link {
+  color: #000;
+}
+#scr {
   position: fixed;
-   z-index: 1001;
-   background: #2c3e50;
+  z-index: 1001;
+  background: #2c3e50;
   border-radius: 20px;
   bottom: 1.25rem;
   color: #fff;
@@ -19,4 +37,21 @@
   right: 1.25rem;
   text-align: center;
   width: 2.625rem;
- }
+}
+.css-1umw9bq-MuiSvgIcon-root {
+  font-size: 1.2rem;
+}
+.css-19kzrtu {
+  padding-bottom: 50px;
+}
+.css-1mf9qzl-MuiButtonBase-root-MuiTabScrollButton-root.Mui-disabled {
+  opacity: 0.3;
+}
+.MuiTabs-scrollButtons.Mui-disabled {
+  opacity: 0.3;
+}
+@media (max-width: 576px) {
+  .cover {
+    width: 98vw;
+  }
+}

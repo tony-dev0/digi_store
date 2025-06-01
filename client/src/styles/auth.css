@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-*
-{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,24 +8,22 @@
   -o-user-select: none;
   -webkit-user-select: none;
 }
-section.authsec{
+section.authsec {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #000;
+  background: linear-gradient(60deg, #292943 50%, rgba(187, 206, 255, 1) 100%);
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
-input[type=number]{
+input[type='number'] {
   -moz-appearance: textfield;
 }
-.section 
-{
-  /* position: absolute; */
+.section {
   width: 100vw;
   height: fit-content;
   display: flex;
@@ -34,36 +31,40 @@ input[type=number]{
   align-items: center;
   gap: 2px;
   flex-wrap: wrap;
-  background: linear-gradient(60deg, #292943 50%, rgba(187,206,255,1) 100%);
+  background: linear-gradient(60deg, #292943 50%, rgba(187, 206, 255, 1) 100%);
 }
-.section::before 
-{
+
+.section::before {
   content: '';
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(60deg, #292943 50%, rgba(187,206,255,1) 100%);
+  background: linear-gradient(60deg, #292943 50%, rgba(187, 206, 255, 1) 100%);
   animation: animate 5s linear infinite;
 }
 
-.section .signin
-{
+.section .signin {
   z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding: 40px; */
-  padding:0 40px 20px 40px;
+  padding: 0 40px 20px 40px;
   border-radius: 4px;
-  box-shadow: 0 5px 5px rgba(0,0,0,9);
 }
-.section .signin .content 
-{
+@media (min-width: 768px) {
+  .section .signin {
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 9);
+  }
+}
+@media (max-width: 767px) {
+  .section .signin {
+    margin-top: -50px;
+  }
+}
+.section .signin .content {
   position: relative;
   width: 100%;
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
   flex-direction: column;
   gap: 20px;
 }
@@ -74,26 +75,22 @@ input[type=number]{
   text-align: center;
   font-weight: 600;
 }
-.section .signin .content h2 
-{
+.section .signin .content h2 {
   font-size: 1.5em;
   color: #329b32;
   text-transform: uppercase;
 }
-.section .signin .content .form 
-{
+.section .signin .content .form {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
-.section .signin .content .form .inputBox
-{
+.section .signin .content .form .inputBox {
   position: relative;
   width: 100%;
 }
-.section .signin .content .form .inputBox input 
-{
+.section .signin .content .form .inputBox input {
   position: relative;
   width: 100%;
   background: #dadada;
@@ -105,8 +102,7 @@ input[type=number]{
   font-weight: 500;
   font-size: 1em;
 }
-.section .signin .content .form .inputBox i 
-{
+.section .signin .content .form .inputBox i {
   position: absolute;
   left: 0;
   padding: 15px 10px;
@@ -116,38 +112,32 @@ input[type=number]{
   pointer-events: none;
 }
 .signin .content .form .inputBox input:valid ~ i,
-.signin .content .form .inputBox input:focus ~ i
-{
+.signin .content .form .inputBox input:focus ~ i {
   transform: translateY(-7.5px);
   font-size: 0.8em;
   color: #fff;
 }
-.signin .content .form .links 
-{
+.signin .content .form .links {
   position: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-.signin .content .form .links a 
-{
+.signin .content .form .links a {
   color: #fff;
   text-decoration: none;
 }
-.img img{
-  height:35px
+.img img {
+  height: 35px;
 }
-.signin .content .form .links a:nth-child(2)
-{
+.signin .content .form .links a:nth-child(2) {
   color: #329b32;
   font-weight: 600;
 }
-.signin .content .form .links a:nth-child(2):hover
-{
+.signin .content .form .links a:nth-child(2):hover {
   color: #3cac3c;
 }
-.signin .content .form .inputBox button[type="submit"]
-{
+.signin .content .form .inputBox button[type='submit'] {
   position: relative;
   width: 100%;
   background: #dadada;
@@ -156,7 +146,7 @@ input[type=number]{
   padding: 15px;
   border-radius: 4px;
   padding: 10px;
-  border:1px solid green;
+  border: 1px solid green;
   /* background: #329b32; */
   color: #329b32;
   font-weight: 600;
@@ -164,52 +154,42 @@ input[type=number]{
   letter-spacing: 0.05em;
   cursor: pointer;
 }
-.signin .content .form .inputBox button[type="submit"]:hover
-{
-background: #288c28;
-color:#fff
+.signin .content .form .inputBox button[type='submit']:hover {
+  background: #288c28;
+  color: #fff;
 }
-button[type="submit"]:active
-{
+button[type='submit']:active {
   opacity: 0.6;
 }
 .tandc {
   color: #ccc;
-  font-size: .8125rem;
-  margin-top: .9375rem;
+  font-size: 0.8125rem;
+  margin-top: 0.9375rem;
   text-align: center;
 }
 .btn-grayish {
   background-color: rgb(79, 79, 79);
-  
 }
-.btn-grayish:hover { 
+.btn-grayish:hover {
   background-color: rgb(92, 92, 92);
 }
-@media (max-width: 890px)
-{
-  .section span 
-  {
+@media (max-width: 890px) {
+  .section span {
     width: calc(10vw - 2px);
     height: calc(10vw - 2px);
   }
-  section .signin
-  {
-    width:400px
+  section .signin {
+    width: 400px;
   }
 }
-@media (max-width: 600px)
-{
-  .section span 
-  {
+@media (max-width: 600px) {
+  .section span {
     width: calc(20vw - 2px);
     height: calc(20vw - 2px);
   }
 }
-@media (min-width: 900px)
-{
-  section .signin
-  {
-    width:40vw
+@media (min-width: 900px) {
+  section .signin {
+    width: 40vw;
   }
 }

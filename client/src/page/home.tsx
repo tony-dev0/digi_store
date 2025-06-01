@@ -13,12 +13,12 @@ import '../styles/font-awesome.min.css'
 import '../styles/bootstrap/dist/css/bootstrap.min.css'
 import '../styles/style.css'
 import '../styles/responsive.css'
-import useFetch from '../hooks/useFetch'
 import { useDispatch } from 'react-redux'
 import { storeProducts } from '../redux/product/productSlice'
+import axios from 'axios'
 
 export const Home = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const [loadscreen, setloadScreen] = useState(false)
   useEffect(() => {
     setloadScreen(true)
@@ -27,10 +27,15 @@ export const Home = () => {
     }, 2000)
   }, [])
 
-const { data, loading, error } = useFetch('/api/products')
+  axios
+    .get('/api/products')
+    .then((res) => {
+      dispatch(storeProducts(res.data))
+    })
+    .catch((error) => {
+      console.log(`Backend Error: ${error}`)
+    })
 
-error.length > 1 ? console.log(`Backend Error: ${error}`) : dispatch(storeProducts(data));
-  
   return (
     <>
       {loadscreen ? (

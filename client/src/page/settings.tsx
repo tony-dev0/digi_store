@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-const { currentUser, loading, error } = useSelector((state: any) => state.user)
+const { currentUser } = useSelector((state: any) => state.user)
 
 const settings = () => {
   return (
