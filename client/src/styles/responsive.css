@@ -398,9 +398,9 @@
     font-size: 31px;
     line-height: 42px;
   }
-  .text-bg a {
+  /* .text-bg a {
     max-width: 163px;
-  }
+  } */
   .laptop .titlepage h2 {
     font-size: 78px;
   }
@@ -451,10 +451,10 @@
     font-size: 21px;
     line-height: 23px;
   }
-  .text-bg a {
+  /* .text-bg a {
     max-width: 107px;
     padding: 9px 0px;
-  }
+  } */
   .d_none {
     display: none;
   }
@@ -515,10 +515,10 @@
   .text-bg span {
     font-size: 38px;
   }
-  .text-bg a {
+  /* .text-bg a {
     margin-bottom: 30px;
     max-width: 202px;
-  }
+  } */
   .box_text {
     margin-bottom: 30px;
   }
@@ -668,10 +668,10 @@
     font-size: 25px;
     line-height: 47px;
   }
-  .text-bg a {
+  /* .text-bg a {
     max-width: 132px;
     padding: 10px 0px;
-  }
+  } */
   .box_text {
     margin-bottom: 30px;
   }

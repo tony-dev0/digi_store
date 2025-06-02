@@ -320,3 +320,26 @@
     margin-left: 25px;
   }
 }
+.banner-img {
+  width: 325px;
+  margin-left: 130px;
+}
+.banner img {
+  width: 100%;
+}
+.authbtn {
+  width: 170px;
+  padding: 10px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  font-weight: bold;
+  font-size: 16px;
+}
+.authbtn:hover {
+  background: rgb(59, 153, 90);
+}
+.authbtn a {
+  color: #fff;
+  text-decoration: none;
+}

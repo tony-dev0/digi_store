@@ -1,4 +1,4 @@
-import pc from '../assets/images/pc.png'
+import pc from '../assets/images/banner2.png'
 import Carousel from 'react-bootstrap/Carousel'
 
 export const Advert = () => {
@@ -38,25 +38,25 @@ export const Desc = () => {
       <section className="top-items about" id="about">
         <div className="container">
           <h2 className="fw-bold">
-            Gigi Store - The Biggest Online Store in Nigeria
+            Digi Store - The Biggest Online Store in Nigeria
           </h2>
           <h2 className="desc">Shop with us all you need is HERE!</h2>
           <p>
-            Gigi Store is the largest online shopping website in Nigeria. We
+            Digi Store is the largest online shopping website in Nigeria. We
             offer a platform where customers in any part of Nigeria can find and
             shop for all they need in one online store and that platform is the
-            Gigi shopping website. On the Gigi mobile app or website, you can
+            Digi shopping website. On the Digi mobile app or website, you can
             shop from the comfort of your home or during work breaks and get
             everything delivered fast without you having to stress or move an
             inch. Be it Accessories,electronics,mobile phones, computers, or
-            your everyday groceries you can get everything you need on Gigi
+            your everyday groceries you can get everything you need on Digi
             online store.
           </p>{' '}
           <div>
             &nbsp; <br />{' '}
           </div>
           <p>
-            Have you used the Gigi online store today? Shop now on Gigi to enjoy
+            Have you used the Digi online store today? Shop now on Digi to enjoy
             a seamless online shopping experience. With fast delivery, free
             returns,and flexible payment options, you are certain to enjoy the
             convenience of shopping online.
@@ -64,14 +64,14 @@ export const Desc = () => {
           <div>
             &nbsp; <br />{' '}
           </div>
-          <h3>Get Your Home Needs on Gigi Nigeria</h3>
+          <h3>Get Your Home Needs on Digi Nigeria</h3>
           <p>
-            Beyond your daily grocery needs, you can shop on Gigi online for
+            Beyond your daily grocery needs, you can shop on Digi online for
             unique home furniture and interior decor pieces to beautify your
             homes and offices. We have carefully designed outdoor furniture and
             lighting for your patio and rooftops. We also have generators,
             inverters, and inverter batteries to power up. There is nothing your
-            home needs that is not on Gigi. You can easily shop from our huge
+            home needs that is not on Digi. You can easily shop from our huge
             collection of large and small appliances such as fridges, washing
             machines, air conditioners, iron, blenders, air fryers, and many
             others. Shop for all your home needs and enjoy top deals, prices,
@@ -80,15 +80,15 @@ export const Desc = () => {
           <div>
             &nbsp; <br />{' '}
           </div>
-          <h3>Buy the Latest Smartphones and Electronics From Gigi Nigeria</h3>
+          <h3>Buy the Latest Smartphones and Electronics From Digi Nigeria</h3>
           <p>
-            Shopping on Gigi guarantees that you get the latest mobile phones,
+            Shopping on Digi guarantees that you get the latest mobile phones,
             tablets, or phablets before anyone else. Buy trusted Apple iOS
             iPhones and iPads and quality Android brands like Samsung, Tecno,
             Xiaomi, Infinix, and many others! Unlock the best functionality of
             your smartphones when you buy our amazing phone accessories like
             AirPods, earphones, powerbank, Bluetooth speakers, durable phone
-            cases, and many more! We have an endless supply of Gigi phone
+            cases, and many more! We have an endless supply of Digi phone
             accessories from top brands like Oraimo, Edifier, Samsung, Tecno,
             JBL, etc.
           </p>{' '}
@@ -117,11 +117,11 @@ export const Desc = () => {
             &nbsp; <br />{' '}
           </div>
           <h1>
-            Enjoy Top Deals and Discounts when Shopping on Gigi Nigeria Online
+            Enjoy Top Deals and Discounts when Shopping on Digi Nigeria Online
             Store
           </h1>
           <p>
-            There are limitless offers and deals on the Gigi Nigeria online
+            There are limitless offers and deals on the Digi Nigeria online
             store. Enjoy up to 80% discount on selected items of the day during
             the flash sales. We also have Half Price Deals where our shoppers
             buy selected products like mobile phones, laptops, phone
@@ -133,7 +133,7 @@ export const Desc = () => {
           </div>
           <p>
             Enjoy other weekly offers that run all year long, which means that
-            every time you shop on the Gigi website, you are sure to enjoy
+            every time you shop on the Digi website, you are sure to enjoy
             mouth-watering discounts and deals that will help you save more and
             get the most affordable prices no one else can give you. To know
             more about these offers and deals, you can subscribe to our push
@@ -146,10 +146,10 @@ export const Desc = () => {
           <h1>Experience Fast Delivery and Online Shopping Convenience</h1>
           <p>
             Get your cart delivered to you within 24 hrs when you buy items with
-            the Gigi Express tag, for selected products, you are also assured of
+            the Digi Express tag, for selected products, you are also assured of
             free delivery and have your products delivered to you at no extra
             cost! Also, we have products that you can ship from abroad under the
-            Gigi Global catalog. This means that you can order various items
+            Digi Global catalog. This means that you can order various items
             from outside the country and get them delivered to your doorstep
             without hassles.{' '}
           </p>
@@ -184,7 +184,7 @@ export const Reviews = () => {
                         <div className="carousel-caption ">
                           <div className="row justify-content-center">
                             <div className="col-md-8 col-lg-6">
-                              <div className="test_box">
+                              <div className="test_box pb-4">
                                 <h4>Mac Anthony</h4>
                                 <div
                                   id="star"
@@ -219,7 +219,7 @@ export const Reviews = () => {
                         <div className="carousel-caption ">
                           <div className="row justify-content-center">
                             <div className="col-md-8 col-lg-6">
-                              <div className="test_box">
+                              <div className="test_box pb-4">
                                 <h4>Sandy Miller</h4>
                                 <div
                                   id="star"
@@ -254,7 +254,7 @@ export const Reviews = () => {
                         <div className="carousel-caption ">
                           <div className="row justify-content-center">
                             <div className="col-md-8 col-lg-6">
-                              <div className="test_box">
+                              <div className="test_box pb-4">
                                 <h4>Clark Kent</h4>
                                 <div
                                   id="star"

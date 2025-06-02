@@ -145,7 +145,7 @@ export default function Desc() {
                 </div>
                 <div className="col-lg-4 py-3">
                   <h2>{specifiedProduct.name}</h2>
-                  <small>Market: Gigi Store | units left: {unit}</small>
+                  <small>Market: Digi Store | units left: {unit}</small>
                   <div
                     id="star"
                     className="d-flex justify-content-start align-items-center g-3 my-3"

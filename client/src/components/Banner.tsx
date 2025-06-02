@@ -1,4 +1,5 @@
-import pct from '../assets/images/pct.png'
+import banner1 from '../assets/images/banner1.png'
+import banner2 from '../assets/images/banner2.png'
 import Carousel from 'react-bootstrap/Carousel'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
@@ -21,8 +22,13 @@ const Banner = () => {
                       of high quality at affordable price. shop with us and
                       enjoy free discount on every product{' '}
                     </p>
-                    <a href="/register">Register</a>{' '}
-                    <a href="/login">Log in </a>
+                    <button className="authbtn me-4">
+                      {' '}
+                      <a href="/register">Register</a>
+                    </button>
+                    <button className="authbtn">
+                      <a href="/login">Log in</a>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -46,14 +52,19 @@ const Banner = () => {
                           products of high quality at affordable price. shop
                           with us and enjoy free discount on every product{' '}
                         </p>
-                        <a href="/register">Register</a>{' '}
-                        <a href="/login">Log in </a>
+                        <button className="authbtn me-4">
+                          {' '}
+                          <a href="/register">Register</a>
+                        </button>
+                        <button className="authbtn">
+                          <a href="/login">Log in</a>
+                        </button>
                       </div>
                     </div>
                     <div className="col-md-6">
-                      <div className="text_img">
+                      <div className="banner">
                         <figure>
-                          <img src={pct} alt="#" />
+                          <img src={banner1} alt="#" />
                         </figure>
                       </div>
                     </div>
@@ -74,14 +85,19 @@ const Banner = () => {
                           available, but the majority have suffered alteration
                           in some form, by injected humour, or{' '}
                         </p>
-                        <a href="/register">Register </a>{' '}
-                        <a href="/login">Log in </a>
+                        <button className="authbtn me-4">
+                          {' '}
+                          <a href="/register">Register</a>
+                        </button>
+                        <button className="authbtn">
+                          <a href="/login">Log in</a>
+                        </button>
                       </div>
                     </div>
                     <div className="col-md-6">
-                      <div className="text_img">
+                      <div className="banner">
                         <figure>
-                          <img src={pct} alt="#" />
+                          <img src={banner2} alt="#" />
                         </figure>
                       </div>
                     </div>

@@ -386,7 +386,7 @@ export default function ViewProduct() {
               <div className="px-3">
                 <h2>{specifiedProduct?.name}</h2>
                 <small>
-                  Market: Gigi Store | units left: {specifiedProduct?.available}
+                  Market: Digi Store | units left: {specifiedProduct?.available}
                 </small>
                 <div
                   id="star"

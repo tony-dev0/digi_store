@@ -74,7 +74,7 @@ export default function PrivateLayout() {
                 <li className="bbot">
                   <a href="" className="acct_nav">
                     <i className="fa fa-user-o me-2" aria-hidden="true"></i>My
-                    Gigi Account
+                    Digi Account
                   </a>
                 </li>
                 <li onClick={sidenav}>

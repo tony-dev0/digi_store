@@ -132,7 +132,7 @@ export default function Cart() {
                             <div className="cart_desc">
                               <h6>{cartItems.name}</h6>
                               <small>few units left</small>
-                              <small className="text-muted"> Gigi store</small>
+                              <small className="text-muted"> Digi store</small>
                             </div>
                           </div>
                           <h3>{cur.format(cartItems.price)}</h3>
