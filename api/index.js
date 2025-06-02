@@ -40,7 +40,7 @@ dotenv.config();
 
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL_MOBILE],
+    origin: [process.env.CLIENT_URL],
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })

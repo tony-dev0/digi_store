@@ -39,7 +39,7 @@ import Calender from './admin/views/calender'
 import Category from './page/category'
 import ManageOrders from './admin/views/orders'
 
-axios.defaults.baseURL = process.env.VITE_API_URL_MOBILE
+axios.defaults.baseURL = process.env.VITE_API_URL
 axios.defaults.withCredentials = true
 
 function App() {
