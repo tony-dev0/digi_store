@@ -9,10 +9,5 @@
     "moduleResolution": "node"
   },
   "include": ["**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx"],
-  "exclude": [
-    "node_modules",
-    "src/currency.js",
-    "src/page/timeFunction.js",
-    "src/assets/images/pcts/readme.txt"
-  ]
+  "exclude": ["node_modules", "**/*.js"]
 }
