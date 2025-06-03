@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { v2 as cloudinary } from "cloudinary";
+// import { v2 as cloudinary } from "cloudinary";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import productRoute from "./routes/products.js";
@@ -82,4 +82,4 @@ app.listen(8000, () => {
   console.log("listening");
 });
 
-export default cloudinary;
+// export default cloudinary;

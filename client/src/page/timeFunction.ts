@@ -1,9 +1,9 @@
-export const dateFormat = (eventDate) => {
+export const dateFormat = (eventDate: any) => {
   const date = new Date(Number(eventDate))
   return date.toLocaleDateString('en-GB')
 }
-export const timeDifference = (pastDate) => {
-  const now = new Date()
+export const timeDifference = (pastDate: any) => {
+  const now: any = new Date()
   const differenceInSeconds = Math.floor((now - pastDate) / 1000)
 
   if (differenceInSeconds < 60) {
