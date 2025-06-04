@@ -1,27 +1,27 @@
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import Box from '@mui/material/Box'
-import { useEffect, useState } from 'react'
-import NotifyClient from './subviews/NotifyClient'
-import EmailClient from './subviews/EmailClient'
-import RecievedMessages from './subviews/RecievedMessages'
-import SentMessages from './subviews/SentMessages'
-import axios from 'axios'
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import { useEffect, useState } from "react";
+import NotifyClient from "./subviews/NotifyClient";
+import EmailClient from "./subviews/EmailClient";
+import RecievedMessages from "./subviews/RecievedMessages";
+import SentMessages from "./subviews/SentMessages";
+import axios from "axios";
 import {
   storeRecievedNotification,
   storeSentNotification,
-} from '../../redux/admin/adminSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import toast from 'react-hot-toast'
+} from "../../redux/admin/adminSlice";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 interface TabPanelProps {
-  children?: React.ReactNode
-  index: number
-  value: number
+  children?: React.ReactNode;
+  index: number;
+  value: number;
 }
 
 function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
+  const { children, value, index, ...other } = props;
 
   return (
     <div
@@ -33,58 +33,59 @@ function CustomTabPanel(props: TabPanelProps) {
     >
       {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
-  )
+  );
 }
 
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  }
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
 }
 
 export default function Messages() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
-      .get('/api/notifications/in')
+      .get("/api/notifications/in")
       .then((res) => {
-        dispatch(storeRecievedNotification(res.data))
+        dispatch(storeRecievedNotification(res.data));
       })
-      .catch(() => toast.error('an error occurred'))
+      .catch(() => toast.error("an error occurred"));
 
     axios
-      .get('/api/notifications/out')
+      .get("/api/notifications/out")
       .then((res) => {
-        dispatch(storeSentNotification(res.data))
+        dispatch(storeSentNotification(res.data));
       })
-      .catch(() => toast.error('an error occurred'))
-  }, [])
+      .catch(() => toast.error("an error occurred"));
+  }, []);
 
-  const { recieved_notifications } = useSelector((state: any) => state.admin)
+  const { recieved_notifications } = useSelector((state: any) => state.admin);
   const label3 =
     !recieved_notifications || recieved_notifications.length == 0
-      ? 'Recieved Messages(0)'
-      : `Recieved Messages(${recieved_notifications.length})`
+      ? "Recieved Messages(0)"
+      : `Recieved Messages(${recieved_notifications.length})`;
 
-  const { sent_notifications } = useSelector((state: any) => state.admin)
+  const { sent_notifications } = useSelector((state: any) => state.admin);
   const label4 =
     !sent_notifications || sent_notifications.length == 0
-      ? 'Sent Messages(0)'
-      : `Sent Messages(${sent_notifications.length})`
+      ? "Sent Messages(0)"
+      : `Sent Messages(${sent_notifications.length})`;
 
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
-  }
+    event.preventDefault();
+    setValue(newValue);
+  };
   return (
     <div>
       <div className="cover">
         <Box
           sx={{
             borderBottom: 1,
-            borderColor: 'divider',
+            borderColor: "divider",
           }}
         >
           <Tabs
@@ -115,5 +116,5 @@ export default function Messages() {
         <SentMessages />
       </CustomTabPanel>
     </div>
-  )
+  );
 }

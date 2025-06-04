@@ -1,10 +1,7 @@
-import { Container, Form, Nav, Navbar } from 'react-bootstrap'
-import logo from '../assets/images/logo14.png'
-import Search from '../components/Search'
-import { Link } from 'react-router-dom'
-import nopage from '../assets/images/404.png'
-import { Header } from '../sections/Header'
-import { Footer } from '../sections/Footer'
+import { Link } from "react-router-dom";
+import nopage from "../assets/images/404.png";
+import { Header } from "../sections/Header";
+import { Footer } from "../sections/Footer";
 
 export const ErrorPage = () => {
   return (
@@ -23,5 +20,5 @@ export const ErrorPage = () => {
       </section>
       <Footer />
     </div>
-  )
-}
+  );
+};

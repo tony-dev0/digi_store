@@ -1,21 +1,24 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import logo from '../assets/images/logo14.png'
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
-import { toast } from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { signOutUserFailure, signOutUserSuccess } from '../redux/user/userSlice'
-import Search from './Search'
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../assets/images/logo14.png";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signOutUserFailure,
+  signOutUserSuccess,
+} from "../redux/user/userSlice";
+import Search from "./Search";
 
 export const _Navbar = () => {
-  const { totalQuantity } = useSelector((state: any) => state.cart)
-  let ishome = false
-  const location = useLocation()
-  if (location.pathname == '/') {
-    ishome = true
+  const { totalQuantity } = useSelector((state: any) => state.cart);
+  let ishome = false;
+  const location = useLocation();
+  if (location.pathname == "/") {
+    ishome = true;
   } else {
-    ishome = false
+    ishome = false;
   }
   return (
     <Navbar expand="lg" className="navbar-dark">
@@ -26,26 +29,26 @@ export const _Navbar = () => {
 
         {!ishome && (
           <div className="cartbtn mobilecart" id="cartbtn">
-            <Link to="/cart" className="blank" style={{ position: 'relative' }}>
+            <Link to="/cart" className="blank" style={{ position: "relative" }}>
               {totalQuantity > 0 && (
                 <div
                   className="dot"
                   style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '13px',
-                    height: '13px',
-                    fontSize: '8px',
-                    backgroundColor: 'red',
-                    position: 'absolute',
-                    top: '-8px',
-                    left: '11px',
-                    borderRadius: '50%',
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "13px",
+                    height: "13px",
+                    fontSize: "8px",
+                    backgroundColor: "red",
+                    position: "absolute",
+                    top: "-8px",
+                    left: "11px",
+                    borderRadius: "50%",
                   }}
                 >
                   <strong>
-                    <span>{totalQuantity > 99 ? '99+' : totalQuantity}</span>
+                    <span>{totalQuantity > 99 ? "99+" : totalQuantity}</span>
                   </strong>
                 </div>
               )}
@@ -71,7 +74,7 @@ export const _Navbar = () => {
         <Navbar.Collapse id="navbarScroll">
           <Nav className="navbar-nav me-auto mb-4 mb-lg-0">
             <li className="nav-item mt-20px">
-              <Nav.Link className={ishome ? 'active' : ''} href="/">
+              <Nav.Link className={ishome ? "active" : ""} href="/">
                 Home
               </Nav.Link>
             </li>
@@ -82,7 +85,7 @@ export const _Navbar = () => {
               <Nav.Link href="/products">Products</Nav.Link>
             </li>
             <li className="nav-item mt-20px">
-              <Nav.Link href="/#contact">Contact Us</Nav.Link>{' '}
+              <Nav.Link href="/#contact">Contact Us</Nav.Link>{" "}
             </li>
           </Nav>
 
@@ -91,27 +94,27 @@ export const _Navbar = () => {
               <Link
                 to="/cart"
                 className="blank"
-                style={{ position: 'relative' }}
+                style={{ position: "relative" }}
               >
                 {totalQuantity > 0 && (
                   <div
                     className="dot"
                     style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      width: '13px',
-                      height: '13px',
-                      fontSize: '8px',
-                      backgroundColor: 'red',
-                      position: 'absolute',
-                      top: '-8px',
-                      left: '11px',
-                      borderRadius: '50%',
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "13px",
+                      height: "13px",
+                      fontSize: "8px",
+                      backgroundColor: "red",
+                      position: "absolute",
+                      top: "-8px",
+                      left: "11px",
+                      borderRadius: "50%",
                     }}
                   >
                     <strong>
-                      <span>{totalQuantity > 99 ? '99+' : totalQuantity}</span>
+                      <span>{totalQuantity > 99 ? "99+" : totalQuantity}</span>
                     </strong>
                   </div>
                 )}
@@ -137,39 +140,39 @@ export const _Navbar = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  )
-}
+  );
+};
 
 export const _Navmenu = () => {
-  const [cartFloat, setcartFloat] = useState(false)
+  const [cartFloat, setcartFloat] = useState(false);
   useEffect(() => {
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
       if (window.scrollY > 1213 && window.scrollY < 4000) {
-        setcartFloat(true)
+        setcartFloat(true);
       } else {
-        setcartFloat(false)
+        setcartFloat(false);
       }
-    })
-  }, [])
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const { currentUser } = useSelector((state: any) => state.user)
-  const { totalQuantity } = useSelector((state: any) => state.cart)
+    });
+  }, []);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state: any) => state.user);
+  const { totalQuantity } = useSelector((state: any) => state.cart);
   const logout = () => {
     try {
-      axios.post('/api/auth/logout').then((res: any) => {
+      axios.post("/api/auth/logout").then((res: any) => {
         if (res.success === false) {
-          dispatch(signOutUserFailure(res.message))
-          return
+          dispatch(signOutUserFailure(res.message));
+          return;
         }
-        dispatch(signOutUserSuccess(res))
-        toast.success(res.message || 'You have been logged out')
-        navigate('/login')
-      })
+        dispatch(signOutUserSuccess(res));
+        toast.success(res.message || "You have been logged out");
+        navigate("/login");
+      });
     } catch (error) {
-      dispatch(signOutUserFailure(error))
+      dispatch(signOutUserFailure(error));
     }
-  }
+  };
   return (
     <div className="oth d-flex gap-5">
       <Navbar collapseOnSelect className="gap-1" id="cartbtn">
@@ -262,26 +265,26 @@ export const _Navmenu = () => {
       </div>
 
       <div className="d-flex gap-1 align-items-center" id="cartbtn">
-        <Link to="/cart" className="blank" style={{ position: 'relative' }}>
+        <Link to="/cart" className="blank" style={{ position: "relative" }}>
           {totalQuantity > 0 && (
             <div
               className="dot"
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '13px',
-                height: '13px',
-                fontSize: '8px',
-                backgroundColor: 'red',
-                position: 'absolute',
-                top: '-8px',
-                left: '11px',
-                borderRadius: '50%',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "13px",
+                height: "13px",
+                fontSize: "8px",
+                backgroundColor: "red",
+                position: "absolute",
+                top: "-8px",
+                left: "11px",
+                borderRadius: "50%",
               }}
             >
               <strong>
-                <span>{totalQuantity > 99 ? '99+' : totalQuantity}</span>
+                <span>{totalQuantity > 99 ? "99+" : totalQuantity}</span>
               </strong>
             </div>
           )}
@@ -304,26 +307,26 @@ export const _Navmenu = () => {
 
       {cartFloat && (
         <div className="cartbtn fixed_cart" id="cartbtn">
-          <a href="/cart" className="blank" style={{ position: 'relative' }}>
+          <a href="/cart" className="blank" style={{ position: "relative" }}>
             {totalQuantity > 0 && (
               <div
                 className="dot"
                 style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: '13px',
-                  height: '13px',
-                  fontSize: '8px',
-                  backgroundColor: 'red',
-                  position: 'absolute',
-                  top: '-8px',
-                  left: '11px',
-                  borderRadius: '50%',
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "13px",
+                  height: "13px",
+                  fontSize: "8px",
+                  backgroundColor: "red",
+                  position: "absolute",
+                  top: "-8px",
+                  left: "11px",
+                  borderRadius: "50%",
                 }}
               >
                 <strong>
-                  <span>{totalQuantity > 99 ? '99+' : totalQuantity}</span>
+                  <span>{totalQuantity > 99 ? "99+" : totalQuantity}</span>
                 </strong>
               </div>
             )}
@@ -345,5 +348,5 @@ export const _Navmenu = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};

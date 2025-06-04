@@ -30,7 +30,6 @@ export default function Orders() {
   const [open, setOpen] = useState(false);
   const [ontab1, setOntab1] = useState("");
   const [ontab2, setOntab2] = useState("");
-  // const openModal = () => setOpen(true);
   const closeModal = () => setOpen(false);
   const [id, setID] = useState<any>("");
   const { orders } = useSelector((state: any) => state.admin);

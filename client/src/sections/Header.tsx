@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react'
-import { _Navbar } from '../components/Nav'
-import { useLocation } from 'react-router-dom'
-import { Container, Nav, Navbar } from 'react-bootstrap'
-import logo from '../assets/images/logo14.png'
-import Search from '../components/Search'
+import { useEffect, useState } from "react";
+import { _Navbar } from "../components/Nav";
+import { useLocation } from "react-router-dom";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import logo from "../assets/images/logo14.png";
+import Search from "../components/Search";
 
 export const Header = () => {
-  const [displaycart, setdisplayCart] = useState<boolean>(false)
-  const location = useLocation()
-  const pathname = location.pathname
+  const [displaycart, setdisplayCart] = useState<boolean>(false);
+  const location = useLocation();
+  const pathname = location.pathname;
   useEffect(() => {
-    if (!pathname.startsWith('/cart')) {
-      setdisplayCart(true)
+    if (!pathname.startsWith("/cart")) {
+      setdisplayCart(true);
     }
-  }, [])
+  }, []);
   return (
     <>
       {displaycart ? (
@@ -24,7 +24,7 @@ export const Header = () => {
         </header>
       ) : (
         <header>
-          {' '}
+          {" "}
           <div className="header">
             <Navbar expand="lg" className="navbar-dark">
               <Container fluid>
@@ -44,7 +44,7 @@ export const Header = () => {
                       <Nav.Link href="/products">Products</Nav.Link>
                     </li>
                     <li className="nav-item mt-20px">
-                      <Nav.Link href="/#contact">Contact Us</Nav.Link>{' '}
+                      <Nav.Link href="/#contact">Contact Us</Nav.Link>{" "}
                     </li>
                   </Nav>
                   <div className="mx-3"></div>
@@ -56,5 +56,5 @@ export const Header = () => {
         </header>
       )}
     </>
-  )
-}
+  );
+};
