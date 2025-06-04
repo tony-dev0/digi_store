@@ -22,6 +22,7 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_CLOUD_SECRET,
 });
+
 app.get("/", (req, res) => {
   res.send("Welcome to the Digi Store API");
 });
@@ -36,9 +37,6 @@ app.use(
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(upload.any());
-//app.use(express.urlencoded({ extended: false}));
-//app.use(express.json());
 app.use("/api/products", productRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
@@ -65,7 +63,7 @@ mongoose.connection.on("connected", () => {
   console.log("mongoDB connected!");
 });
 
-app.listen(8000, () => {
+app.listen(process.env.PORT, () => {
   connect();
   console.log("listening");
 });
