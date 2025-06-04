@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import orders from '../assets/icons/acct/orders.svg'
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import orders from "../assets/icons/acct/orders.svg";
 import {
   AccordionBody,
   AccordionHeader,
@@ -10,58 +10,66 @@ import {
   NavLink,
   TabContent,
   TabPane,
-  UncontrolledAccordion,
-} from 'reactstrap'
-import axios from 'axios'
-import toast from 'react-hot-toast'
-import { cur } from '../currency.js'
+  Accordion,
+} from "reactstrap";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { cur } from "../currency.js";
 
 export default function Orders() {
-  const [openOrders, setOpenOrders] = useState([])
-  const [closeOrders, setCloseOrders] = useState([])
-  const [active, setActive] = useState(true)
-  const [activeTab, setactiveTab] = useState(1)
-  let tab1 = 1
-  let tab2 = 2
+  const [openOrders, setOpenOrders] = useState([]);
+  const [closeOrders, setCloseOrders] = useState([]);
+  const [ontab1, setOntab1] = useState("");
+  const [ontab2, setOntab2] = useState("");
+  const [active, setActive] = useState(true);
+  const [activeTab, setactiveTab] = useState(1);
+  let tab1 = 1;
+  let tab2 = 2;
 
   const handleFirstTab = () => {
-    setActive(true)
-    setactiveTab(1)
-  }
+    setActive(true);
+    setactiveTab(1);
+  };
   const handleSecondTab = () => {
-    setActive(false)
-    setactiveTab(2)
-  }
+    setActive(false);
+    setactiveTab(2);
+  };
+  const toggleOpenOrders = (id: string) => {
+    setOntab1(ontab1 === id ? "" : id);
+  };
+  const toggleCloseOrders = (id: string) => {
+    setOntab2(ontab2 === id ? "" : id);
+  };
 
-  const [data, setData] = useState<any>(null)
-  const { currentUser } = useSelector((state: any) => state.user)
+  const [data, setData] = useState<any>(null);
+  const { currentUser } = useSelector((state: any) => state.user);
   useEffect(() => {
     axios
       .get(`/api/orders/${currentUser._id}`)
       .then((res: any) => {
-        setData(res.data.reverse())
+        setData(res.data.reverse());
       })
       .catch((err) => {
-        toast.error('An error occurred')
-        console.log(err)
-      })
-  }, [])
+        toast.error("An error occurred");
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
-    if (!data) return
+    if (!data) return;
 
-    const arropen = data.filter((o: any) => o.status === 'open')
-    const arrclose = data.filter((c: any) => c.status === 'closed')
+    const arropen = data.filter((o: any) => o.status === "open");
+    const arrclose = data.filter((c: any) => c.status === "closed");
 
-    setOpenOrders(arropen)
-    setCloseOrders(arrclose)
-  }, [data])
+    setOpenOrders(arropen);
+    setCloseOrders(arrclose);
+  }, [data]);
   return (
     <div>
-      <div className="mtg mb-3" style={{ borderBottom: '1px solid #dbd0d0' }}>
-        <h3>Orders({!data ? '0' : data.length})</h3>
+      <div className="mtg mb-3" style={{ borderBottom: "1px solid #dbd0d0" }}>
+        <h3>Orders({!data ? "0" : data.length})</h3>
       </div>
-      <div className="" style={{ height: '432px', overflowY: 'auto' }}>
+      <div className="" style={{ height: "432px", overflowY: "auto" }}>
         {data?.length < 1 ? (
           <div className="content">
             <img src={orders} alt="" />
@@ -79,17 +87,17 @@ export default function Orders() {
         ) : (
           <div className="nav-tab-pill">
             <Nav tabs>
-              <NavItem style={{ cursor: 'pointer', color: '#000' }}>
+              <NavItem style={{ cursor: "pointer", color: "#000" }}>
                 <NavLink
-                  className={active ? 'active' : ''}
+                  className={active ? "active" : ""}
                   onClick={handleFirstTab}
                 >
                   OPEN ORDERS({openOrders?.length})
                 </NavLink>
               </NavItem>
-              <NavItem style={{ cursor: 'pointer', color: '#000' }}>
+              <NavItem style={{ cursor: "pointer", color: "#000" }}>
                 <NavLink
-                  className={active ? '' : 'active'}
+                  className={active ? "" : "active"}
                   onClick={handleSecondTab}
                 >
                   CLOSED ORDERS({closeOrders?.length})
@@ -99,7 +107,7 @@ export default function Orders() {
 
             <TabContent activeTab={activeTab}>
               <TabPane tabId={tab1}>
-                <UncontrolledAccordion>
+                <Accordion open={ontab1} toggle={toggleOpenOrders}>
                   {openOrders?.map((order: any, index: number) => {
                     return (
                       <AccordionItem key={index}>
@@ -109,10 +117,10 @@ export default function Orders() {
                         <AccordionBody accordionId={String(index)}>
                           <div className="order-desc mb-3">
                             <span>
-                              Your order{' '}
+                              Your order{" "}
                               <strong className="text-success">
                                 #digi_exp_{order._id.slice(0, 16)}...
-                              </strong>{' '}
+                              </strong>{" "}
                               has been shipped and you will recieve it soon
                             </span>
                             <p>Order Item Count: {order.total_order}</p>
@@ -124,7 +132,7 @@ export default function Orders() {
                               <div className="order-wrap d-flex gap-3" key={i}>
                                 <div className="order-img">
                                   <img
-                                    src={require('../assets/' + p.photo)}
+                                    src={p.photo}
                                     alt=""
                                     width={100}
                                     height={110}
@@ -138,24 +146,24 @@ export default function Orders() {
                                     <p>Quantity: {p.quantity}</p>
                                     <p>Price: {cur.format(p.price)}</p>
                                     <p>
-                                      SubTotal:{' '}
+                                      SubTotal:{" "}
                                       {cur.format(p.price * p.quantity)}
                                     </p>
                                   </div>
                                   {i !== order.products.length - 1 && <hr />}
                                 </div>
                               </div>
-                            )
+                            );
                           })}
                         </AccordionBody>
                       </AccordionItem>
-                    )
+                    );
                   })}
-                </UncontrolledAccordion>
+                </Accordion>
               </TabPane>
 
               <TabPane tabId={tab2}>
-                <UncontrolledAccordion>
+                <Accordion open={ontab2} toggle={toggleCloseOrders}>
                   {closeOrders?.map((order: any, index: number) => {
                     return (
                       <AccordionItem key={index}>
@@ -165,10 +173,10 @@ export default function Orders() {
                         <AccordionBody accordionId={String(index)}>
                           <div className="order-desc mb-3">
                             <span>
-                              Your order{' '}
+                              Your order{" "}
                               <strong className="text-success">
                                 #digi_exp_{order._id.slice(0, 16)}...
-                              </strong>{' '}
+                              </strong>{" "}
                               has been shipped and you will recieve it soon
                             </span>
                             <p>Order Item Count: {order.total_order}</p>
@@ -180,7 +188,7 @@ export default function Orders() {
                               <div className="order-wrap d-flex gap-3" key={i}>
                                 <div className="order-img">
                                   <img
-                                    src={require('../assets/' + p.photo)}
+                                    src={p.photo}
                                     alt=""
                                     width={100}
                                     height={110}
@@ -194,25 +202,25 @@ export default function Orders() {
                                     <p>Quantity: {p.quantity}</p>
                                     <p>Price: {cur.format(p.price)}</p>
                                     <p>
-                                      SubTotal:{' '}
+                                      SubTotal:{" "}
                                       {cur.format(p.price * p.quantity)}
                                     </p>
                                   </div>
                                   {i !== order.products.length - 1 && <hr />}
                                 </div>
                               </div>
-                            )
+                            );
                           })}
                         </AccordionBody>
                       </AccordionItem>
-                    )
+                    );
                   })}
-                </UncontrolledAccordion>
+                </Accordion>
               </TabPane>
             </TabContent>
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }

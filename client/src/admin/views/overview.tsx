@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
-import Grid from '@mui/material/Grid2'
-import Stack from '@mui/material/Stack'
-import MainCard from '../components/MainCard'
-import UniqueVisitorCard from '../components/UniqueVisitorCard'
-import MonthlyBarChart from '../components/MonthlyBarChart'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import RequestQuoteIcon from '@mui/icons-material/RequestQuote'
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits'
-import Inventory2Icon from '@mui/icons-material/Inventory2'
+import { useEffect, useState } from "react";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import MainCard from "../components/MainCard";
+import UniqueVisitorCard from "../components/UniqueVisitorCard";
+import MonthlyBarChart from "../components/MonthlyBarChart";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
 import {
   TableContainer,
   Table,
@@ -19,28 +19,28 @@ import {
   TableRow,
   TableCell,
   Paper,
-} from '@mui/material'
-import { useSelector } from 'react-redux'
-import { cur } from '../../currency.js'
-import { OverviewCardSkeleton } from '../components/OverviewCardSkeleton'
-import axios from 'axios'
+} from "@mui/material";
+import { useSelector } from "react-redux";
+import { cur } from "../../currency.js";
+import { OverviewCardSkeleton } from "../components/OverviewCardSkeleton";
+import axios from "axios";
 
 export default function Overview() {
-  const [loading, setLoading] = useState(true)
-  const [totalData, settotalData] = useState<overview[]>([])
-  const { users, products } = useSelector((state: any) => state.admin)
+  const [loading, setLoading] = useState(true);
+  const [totalData, settotalData] = useState<overview[]>([]);
+  const { users, products } = useSelector((state: any) => state.admin);
 
   useEffect(() => {
     axios
-      .get('/api/overview')
+      .get("/api/overview")
       .then((res: { data: overview[] }) => {
-        settotalData(res.data)
-        setLoading(false)
+        settotalData(res.data);
+        setLoading(false);
       })
       .catch((error) => {
-        console.log(`Backend Error: ${error}`)
-      })
-  }, [])
+        console.log(`Backend Error: ${error}`);
+      });
+  }, []);
   return (
     <>
       <div className="px-3 mt-4">
@@ -55,63 +55,63 @@ export default function Overview() {
                     sx={{
                       border:
                         i == 0
-                          ? '2px solid #cef9dd'
+                          ? "2px solid #cef9dd"
                           : i == 1
-                            ? '2px solid #dfdeff'
-                            : '2px solid #f0cece',
-                      borderRadius: '10px',
-                      backgroundColor: '#f2f2f2',
-                      boxShadow: 'rgba(0,0,0,0.35) 0px 5px 15px',
+                          ? "2px solid #dfdeff"
+                          : "2px solid #f0cece",
+                      borderRadius: "10px",
+                      backgroundColor: "#f2f2f2",
+                      boxShadow: "rgba(0,0,0,0.35) 0px 5px 15px",
                     }}
                   >
                     <div className="px-3 mt-3 d-flex justify-content-between align-items-center">
                       <div className="d-flex flex-column">
                         <Typography variant="h6"> {data.title}</Typography>
                         <Typography
-                          sx={{ my: 2, fontWeight: 'bold', fontSize: '22px' }}
+                          sx={{ my: 2, fontWeight: "bold", fontSize: "22px" }}
                         >
-                          {' '}
+                          {" "}
                           {i == 0 ? cur.format(data.value) : data.value}
                         </Typography>
                       </div>
                       {i == 0 && (
                         <RequestQuoteIcon
-                          sx={{ fontSize: '40px', color: '#619b6d' }}
+                          sx={{ fontSize: "40px", color: "#619b6d" }}
                         />
                       )}
                       {i == 1 && (
                         <Inventory2Icon
-                          sx={{ fontSize: '40px', color: '#8280ae' }}
+                          sx={{ fontSize: "40px", color: "#8280ae" }}
                         />
                       )}
                       {i == 2 && (
                         <ProductionQuantityLimitsIcon
-                          sx={{ fontSize: '40px', color: '#bd5d5d' }}
+                          sx={{ fontSize: "40px", color: "#bd5d5d" }}
                         />
                       )}
                     </div>
                     <hr />
                     <Typography
-                      sx={{ textAlign: 'center', marginBottom: '7px' }}
+                      sx={{ textAlign: "center", marginBottom: "7px" }}
                     >
-                      {String(data.percent).includes('-') ? (
-                        <span className={'text-danger'}>
-                          {' '}
+                      {String(data.percent).includes("-") ? (
+                        <span className={"text-danger"}>
+                          {" "}
                           <ArrowDropDownIcon />
-                          {String(data.percent).replace('-', '')}% &nbsp;
+                          {String(data.percent).replace("-", "")}% &nbsp;
                         </span>
                       ) : (
-                        <span className={'text-success'}>
-                          {' '}
+                        <span className={"text-success"}>
+                          {" "}
                           <ArrowDropUpIcon />
-                          {data.percent}% &nbsp;{' '}
+                          {data.percent}% &nbsp;{" "}
                         </span>
                       )}
                       {data.percentdesc}
                     </Typography>
                   </Box>
                 </div>
-              )
+              );
             })
           )}
         </div>
@@ -145,14 +145,14 @@ export default function Overview() {
         <div className="row g-0 mt-5 gap-5 gap-md-0 ms-md-4">
           <div className="col-12 col-md-6">
             <Typography
-              sx={{ fontWeight: '600', marginBottom: '14px', fontSize: '17px' }}
+              sx={{ fontWeight: "600", marginBottom: "14px", fontSize: "17px" }}
             >
               Recent Sign In
             </Typography>
             <TableContainer component={Paper}>
               <Table aria-label="client table">
                 <TableHead>
-                  <TableRow sx={{ th: { fontWeight: 600, fontSize: '15px' } }}>
+                  <TableRow sx={{ th: { fontWeight: 600, fontSize: "15px" } }}>
                     <TableCell align="center">Id</TableCell>
                     <TableCell align="center">Name</TableCell>
                     <TableCell align="center">Email</TableCell>
@@ -161,14 +161,14 @@ export default function Overview() {
                 </TableHead>
                 <TableBody
                   // sx={{ "tr:nth-child(even)": { backgroundColor: "#f1f5f9" } }}
-                  sx={{ 'tr:nth-child(odd)': { backgroundColor: '#cfcee6 ' } }}
+                  sx={{ "tr:nth-child(odd)": { backgroundColor: "#cfcee6 " } }}
                 >
                   {users.slice(0, 6).map((user: any, i: any) => {
                     return (
                       <TableRow
                         key={i}
                         sx={{
-                          '&:last-child td, &:last-child th': { border: 0 },
+                          "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
                         <TableCell align="center">{i + 1}</TableCell>
@@ -176,7 +176,7 @@ export default function Overview() {
                         <TableCell align="center">{user.email}</TableCell>
                         {/* <TableCell align="center">{user.phone}</TableCell> */}
                       </TableRow>
-                    )
+                    );
                   })}
                 </TableBody>
               </Table>
@@ -185,14 +185,14 @@ export default function Overview() {
 
           <div className="col-12 col-md-6">
             <Typography
-              sx={{ fontWeight: '600', marginBottom: '14px', fontSize: '17px' }}
+              sx={{ fontWeight: "600", marginBottom: "14px", fontSize: "17px" }}
             >
               Latest Products
             </Typography>
             <TableContainer component={Paper}>
               <Table aria-label="product table">
                 <TableHead>
-                  <TableRow sx={{ th: { fontWeight: 600, fontSize: '15px' } }}>
+                  <TableRow sx={{ th: { fontWeight: 600, fontSize: "15px" } }}>
                     <TableCell align="center">Id</TableCell>
                     {/* <TableCell align="center">Name</TableCell> */}
                     <TableCell align="center">type</TableCell>
@@ -201,14 +201,14 @@ export default function Overview() {
                 </TableHead>
                 <TableBody
                   // sx={{ "tr:nth-child(even)": { backgroundColor: "#f1f5f9" } }}
-                  sx={{ 'tr:nth-child(odd)': { backgroundColor: '#cfcee6 ' } }}
+                  sx={{ "tr:nth-child(odd)": { backgroundColor: "#cfcee6 " } }}
                 >
                   {products.slice(12, 18).map((product: any, i: any) => {
                     return (
                       <TableRow
                         key={i}
                         sx={{
-                          '&:last-child td, &:last-child th': { border: 0 },
+                          "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
                         <TableCell align="center">{i + 1}</TableCell>
@@ -216,7 +216,7 @@ export default function Overview() {
                         <TableCell align="center">{product.type}</TableCell>
                         <TableCell align="center">{product.price}</TableCell>
                       </TableRow>
-                    )
+                    );
                   })}
                 </TableBody>
               </Table>
@@ -225,5 +225,5 @@ export default function Overview() {
         </div>
       </div>
     </>
-  )
+  );
 }

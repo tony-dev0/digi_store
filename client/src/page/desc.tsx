@@ -1,89 +1,88 @@
-import React from 'react'
-import { _Navbar } from '../components/Nav'
-import Carousel from 'react-bootstrap/Carousel'
-import visa from '../assets/icons/visa.svg'
-import mcard from '../assets/icons/mastercard.svg'
-import verve from '../assets/icons/verve.svg'
-import ad1 from '../assets/images/advert/2.jpg'
-import ad2 from '../assets/images/advert/117.jpg'
-import ad3 from '../assets/images/advert/26.png'
-import ad4 from '../assets/images/advert/47.jpg'
-import ad5 from '../assets/images/advert/120.jpg'
-import ad6 from '../assets/images/advert/112.png'
-import shipping from '../assets/images/img/shipping.png'
-import delivery from '../assets/images/img/delivery.png'
-import warranty from '../assets/images/img/warranty.png'
-import { toast } from 'react-hot-toast'
-import { Topitems } from '../sections/Products'
-import { useSelector, useDispatch } from 'react-redux'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import { updateItemQuantity, addItemToCart } from '../redux/cart/cartSlice'
-import { Header } from '../sections/Header'
-import { Footer } from '../sections/Footer'
-import { cur } from '../currency.js'
+import React from "react";
+import { _Navbar } from "../components/Nav";
+import Carousel from "react-bootstrap/Carousel";
+import visa from "../assets/icons/visa.svg";
+import mcard from "../assets/icons/mastercard.svg";
+import verve from "../assets/icons/verve.svg";
+import ad1 from "../assets/images/advert/2.jpg";
+import ad2 from "../assets/images/advert/117.jpg";
+import ad3 from "../assets/images/advert/26.png";
+import ad4 from "../assets/images/advert/47.jpg";
+import ad5 from "../assets/images/advert/120.jpg";
+import ad6 from "../assets/images/advert/112.png";
+import shipping from "../assets/images/img/shipping.png";
+import delivery from "../assets/images/img/delivery.png";
+import warranty from "../assets/images/img/warranty.png";
+import { toast } from "react-hot-toast";
+import { Topitems } from "../sections/Products";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { updateItemQuantity, addItemToCart } from "../redux/cart/cartSlice";
+import { Header } from "../sections/Header";
+import { Footer } from "../sections/Footer";
+import { cur } from "../currency.js";
 
 export default function Desc() {
-  const year = new Date().getFullYear()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const { loader, products } = useSelector((state: any) => state.product)
-  const { items } = useSelector((state: any) => state.cart)
-  const params = useParams()
-  const [active, setActive] = useState(0)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loader, products } = useSelector((state: any) => state.product);
+  const { items } = useSelector((state: any) => state.cart);
+  const params = useParams();
+  const [active, setActive] = useState(0);
   const specifiedProduct = products.find(
     (product: { _id: any }) => product._id === params.id
-  )
+  );
   const cartItems: any = items.find(
     (item: { _id: any }) => item._id === params.id
-  )
-  const unit = specifiedProduct.available
-  const [inputValue, setinputValue] = useState(cartItems?.quantity)
+  );
+  const unit = specifiedProduct.available;
+  const [inputValue, setinputValue] = useState(cartItems?.quantity);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setinputValue(e.target.value)
-  }
+    setinputValue(e.target.value);
+  };
 
   const handleSubmit = (e: React.FormEvent | any) => {
-    e.preventDefault()
-    if (e.nativeEvent.submitter.name == 'cartbtn') {
-      const quantity = Number(inputValue)
+    e.preventDefault();
+    if (e.nativeEvent.submitter.name == "cartbtn") {
+      const quantity = Number(inputValue);
       if (quantity < unit && quantity > 0) {
         dispatch(
           updateItemQuantity({ ...specifiedProduct, quantity: quantity })
-        )
-        toast.success(`${quantity} items added to cart`)
+        );
+        toast.success(`${quantity} items added to cart`);
       } else {
-        toast.error('input a correct value')
+        toast.error("input a correct value");
       }
     }
-    if (e.nativeEvent.submitter.name == 'buybtn') {
+    if (e.nativeEvent.submitter.name == "buybtn") {
       if (inputValue === undefined || inputValue < 1) {
-        dispatch(addItemToCart({ ...specifiedProduct, quantity: 1 }))
-        navigate('/cart')
+        dispatch(addItemToCart({ ...specifiedProduct, quantity: 1 }));
+        navigate("/cart");
       } else {
-        navigate('/cart')
+        navigate("/cart");
       }
     }
-  }
+  };
 
   const increaseItem = () => {
-    inputValue === undefined ? setinputValue(1) : inputValue
-    let val = Number(inputValue)
+    inputValue === undefined ? setinputValue(1) : inputValue;
+    let val = Number(inputValue);
     if (Number.isInteger(val) && val < unit) {
-      const value = String(val + 1)
-      setinputValue(value)
+      const value = String(val + 1);
+      setinputValue(value);
     }
-  }
+  };
 
   const decreaseItem = () => {
-    inputValue === undefined ? setinputValue(0) : inputValue
-    let val = Number(inputValue)
+    inputValue === undefined ? setinputValue(0) : inputValue;
+    let val = Number(inputValue);
     if (Number.isInteger(val) && val >= 1) {
-      const value = String(val - 1)
-      setinputValue(value)
+      const value = String(val - 1);
+      setinputValue(value);
     }
-  }
+  };
 
   return (
     <>
@@ -92,7 +91,7 @@ export default function Desc() {
         <div className="container">
           <div className="row">
             {loader ? (
-              'loading'
+              "loading"
             ) : (
               <>
                 <div className="img-content col-lg-4 py-3">
@@ -102,9 +101,7 @@ export default function Desc() {
                   ></i>
                   <img
                     className="img-front"
-                    src={require(
-                      '../assets/' + specifiedProduct.photos[active]
-                    )}
+                    src={specifiedProduct.photos[active]}
                     alt=""
                     width=""
                   />
@@ -114,29 +111,29 @@ export default function Desc() {
                   ></i>
                   <div className="img-slider p-1">
                     <img
-                      className={active == 0 ? 'img-fluid active' : 'img-fluid'}
-                      src={require('../assets/' + specifiedProduct.photos[0])}
+                      className={active == 0 ? "img-fluid active" : "img-fluid"}
+                      src={specifiedProduct.photos[0]}
                       alt=""
                       width="55"
                       onClick={() => setActive(0)}
                     />
                     <img
-                      className={active == 1 ? 'img-fluid active' : 'img-fluid'}
-                      src={require('../assets/' + specifiedProduct.photos[1])}
+                      className={active == 1 ? "img-fluid active" : "img-fluid"}
+                      src={specifiedProduct.photos[1]}
                       alt=""
                       width="55"
                       onClick={() => setActive(1)}
                     />
                     <img
-                      className={active == 2 ? 'img-fluid active' : 'img-fluid'}
-                      src={require('../assets/' + specifiedProduct.photos[2])}
+                      className={active == 2 ? "img-fluid active" : "img-fluid"}
+                      src={specifiedProduct.photos[2]}
                       alt=""
                       width="55"
                       onClick={() => setActive(2)}
                     />
                     <img
-                      className={active == 3 ? 'img-fluid active' : 'img-fluid'}
-                      src={require('../assets/' + specifiedProduct.photos[3])}
+                      className={active == 3 ? "img-fluid active" : "img-fluid"}
+                      src={specifiedProduct.photos[3]}
                       alt=""
                       width="55"
                       onClick={() => setActive(3)}
@@ -174,9 +171,9 @@ export default function Desc() {
                           <i className="fa fa-plus" aria-hidden="true"></i>
                         </button>
                         <div className="qtyval d-flex justify-content-end align-items-center border-1">
-                          {' '}
+                          {" "}
                           <input
-                            style={{ width: '65px' }}
+                            style={{ width: "65px" }}
                             className="px-3 py-1"
                             name="quantity"
                             min={0}
@@ -184,11 +181,11 @@ export default function Desc() {
                             maxLength={2}
                             type="number"
                             placeholder={
-                              cartItems === undefined ? '0' : cartItems.quantity
+                              cartItems === undefined ? "0" : cartItems.quantity
                             }
                             value={inputValue}
                             onChange={handleInputChange}
-                          />{' '}
+                          />{" "}
                         </div>
                       </div>
                       <button
@@ -200,7 +197,7 @@ export default function Desc() {
                     </div>
                     <br />
                     <h4>
-                      Total:{' '}
+                      Total:{" "}
                       {inputValue === undefined
                         ? 0
                         : cur.format(inputValue * specifiedProduct.price)}
@@ -274,18 +271,18 @@ export default function Desc() {
               <Carousel.Item interval={3000}>
                 <div className="container position-relative">
                   <img className="ad" src={ad1} alt="" />
-                  <div style={{ position: 'absolute', top: '80%', left: '5%' }}>
-                    {' '}
+                  <div style={{ position: "absolute", top: "80%", left: "5%" }}>
+                    {" "}
                     <button className="adbtn btn btn-success rounded-3">
                       SHOP NOW
-                    </button>{' '}
+                    </button>{" "}
                   </div>
                 </div>
               </Carousel.Item>
               <Carousel.Item interval={3000}>
                 <div className="container position-relative">
                   <img className="ad" src={ad2} alt="" />
-                  <div style={{ position: 'absolute', top: '80%', left: '5%' }}>
+                  <div style={{ position: "absolute", top: "80%", left: "5%" }}>
                     <button className="adbtn btn btn-success rounded-3">
                       SHOP NOW
                     </button>
@@ -295,18 +292,18 @@ export default function Desc() {
               <Carousel.Item interval={3000}>
                 <div className="container position-relative">
                   <img className="ad" src={ad3} alt="" />
-                  <div style={{ position: 'absolute', top: '80%', left: '5%' }}>
-                    {' '}
+                  <div style={{ position: "absolute", top: "80%", left: "5%" }}>
+                    {" "}
                     <button className="adbtn btn btn-success rounded-3">
                       SHOP NOW
-                    </button>{' '}
+                    </button>{" "}
                   </div>
                 </div>
               </Carousel.Item>
               <Carousel.Item interval={3000}>
                 <div className="container position-relative">
                   <img className="ad" src={ad4} alt="" />
-                  <div style={{ position: 'absolute', top: '80%', left: '5%' }}>
+                  <div style={{ position: "absolute", top: "80%", left: "5%" }}>
                     <button className="adbtn btn btn-success rounded-3">
                       SHOP NOW
                     </button>
@@ -316,18 +313,18 @@ export default function Desc() {
               <Carousel.Item interval={3000}>
                 <div className="container position-relative">
                   <img className="ad" src={ad5} alt="" />
-                  <div style={{ position: 'absolute', top: '80%', left: '5%' }}>
-                    {' '}
+                  <div style={{ position: "absolute", top: "80%", left: "5%" }}>
+                    {" "}
                     <button className="adbtn btn btn-success rounded-3">
                       SHOP NOW
-                    </button>{' '}
+                    </button>{" "}
                   </div>
                 </div>
               </Carousel.Item>
               <Carousel.Item interval={4000}>
                 <div className="container position-relative">
                   <img className="ad" src={ad6} alt="" />
-                  <div style={{ position: 'absolute', top: '80%', left: '5%' }}>
+                  <div style={{ position: "absolute", top: "80%", left: "5%" }}>
                     <button className="adbtn btn btn-success rounded-3">
                       SHOP NOW
                     </button>
@@ -341,5 +338,5 @@ export default function Desc() {
       </section>
       <Footer />
     </>
-  )
+  );
 }

@@ -1,82 +1,82 @@
-import emptycart from '../assets/icons/cart_empty.svg'
-import LockIcon from '@mui/icons-material/Lock'
-import shipping from '../assets/images/img/shipping.png'
-import delivery from '../assets/images/img/delivery.png'
-import warranty from '../assets/images/img/warranty.png'
-import { useSelector, useDispatch } from 'react-redux'
-import { PaystackButton } from 'react-paystack'
-import { Topitems } from '../sections/Products'
+import emptycart from "../assets/icons/cart_empty.svg";
+import LockIcon from "@mui/icons-material/Lock";
+import shipping from "../assets/images/img/shipping.png";
+import delivery from "../assets/images/img/delivery.png";
+import warranty from "../assets/images/img/warranty.png";
+import { useSelector, useDispatch } from "react-redux";
+import { PaystackButton } from "react-paystack";
+import { Topitems } from "../sections/Products";
 import {
   increaseItemQuantity,
   decreaseItemQuantity,
   clearCart,
   removeItemFromCart,
-} from '../redux/cart/cartSlice'
-import { Link, useNavigate } from 'react-router-dom'
-import { Header } from '../sections/Header'
-import { Footer } from '../sections/Footer'
-import { cur } from '../currency.js'
-import axios from 'axios'
+} from "../redux/cart/cartSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { Header } from "../sections/Header";
+import { Footer } from "../sections/Footer";
+import { cur } from "../currency.js";
+import axios from "axios";
 
 export default function Cart() {
-  const navigate = useNavigate()
-  const publickey = process.env.VITE_PAYSTACK_PUBLISH_KEY
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const publickey = import.meta.env.VITE_PAYSTACK_PUBLISH_KEY;
+  const dispatch = useDispatch();
   const { items, totalQuantity, totalAmount } = useSelector(
     (state: any) => state.cart
-  )
-  const { currentUser } = useSelector((state: any) => state.user)
+  );
+  const { currentUser } = useSelector((state: any) => state.user);
   function filterArr(originalArray: Itemtype[]) {
     const newArray = originalArray.map((obj) => {
-      const { _id, name, price, photos, quantity } = obj
-      return { _id, name, price, photo: photos[0], quantity }
-    })
-    return newArray
+      const { _id, name, price, photos, quantity } = obj;
+      return { _id, name, price, photo: photos[0], quantity };
+    });
+    return newArray;
   }
   const addOrder = () => {
-    const new_order = filterArr(items)
+    const new_order = filterArr(items);
     axios
-      .post('api/orders', {
+      .post("api/orders", {
         user_id: currentUser?._id,
         new_order: new_order,
         quantity: totalQuantity,
         amount: totalAmount,
       })
       .then((res: any) => {
-        console.log(res.data)
-        navigate('/payment-success')
+        console.log(res.data);
+        navigate("/payment-success");
       })
-      .catch((error) => window.alert(error?.message))
-  }
+      .catch((error) => window.alert(error?.message));
+  };
 
   const paymentProps = {
     amount: totalAmount * 100,
     email: currentUser?.email,
     publicKey: publickey,
-    text: 'Checkout ' + cur.format(totalAmount),
+    text: "Checkout " + cur.format(totalAmount),
     onSuccess: (reference: any) => {
-      console.log('Payment successful!', reference)
-      addOrder()
+      console.log("Payment successful!", reference);
+      addOrder();
     },
     onClose: () => {
-      navigate('/payment-cancel')
+      navigate("/payment-cancel");
       // Handle the case where the user closes the Paystack Checkout
     },
     metadata: {
       custom_fields: [
         {
-          display_name: 'First name',
-          variable_name: 'first_name',
+          display_name: "First name",
+          variable_name: "first_name",
           value: currentUser?.username,
         },
         {
-          display_name: 'Phone Number',
-          variable_name: 'phone_number',
+          display_name: "Phone Number",
+          variable_name: "phone_number",
           value: currentUser?.phone,
         },
       ],
     },
-  }
+  };
   return (
     <div>
       <Header />
@@ -104,11 +104,11 @@ export default function Cart() {
                     <button
                       className="rmbtn btn-sm"
                       onClick={() => {
-                        dispatch(clearCart())
+                        dispatch(clearCart());
                       }}
                     >
-                      <i className="me-1 fa fa-trash-o" aria-hidden="true"></i>{' '}
-                      Clear{' '}
+                      <i className="me-1 fa fa-trash-o" aria-hidden="true"></i>{" "}
+                      Clear{" "}
                     </button>
                   </div>
                   {items.map((cartItems: Itemtype, i: any) => {
@@ -123,11 +123,9 @@ export default function Cart() {
                             >
                               <img
                                 className="rounded img-thumbnail"
-                                src={require(
-                                  '../assets/' + cartItems.photos[0]
-                                )}
+                                src={cartItems.photos[0]}
                                 alt=""
-                              />{' '}
+                              />{" "}
                             </Link>
                             <div className="cart_desc">
                               <h6>{cartItems.name}</h6>
@@ -141,32 +139,32 @@ export default function Cart() {
                           <button
                             className="rmbtn btn-sm"
                             onClick={() => {
-                              dispatch(removeItemFromCart(cartItems._id))
+                              dispatch(removeItemFromCart(cartItems._id));
                             }}
                           >
                             <i
                               className="me-1 fa fa-trash-o"
                               aria-hidden="true"
-                            ></i>{' '}
-                            Remove{' '}
+                            ></i>{" "}
+                            Remove{" "}
                           </button>
                           <div className="qtyaos d-flex">
                             <button
                               className="qtyadd px-3 py-1"
                               onClick={() => {
-                                dispatch(increaseItemQuantity(cartItems._id))
+                                dispatch(increaseItemQuantity(cartItems._id));
                               }}
                             >
                               <i className="fa fa-plus" aria-hidden="true"></i>
                             </button>
                             <div className="qtyval text-center border-1">
-                              {' '}
-                              {cartItems.quantity}{' '}
+                              {" "}
+                              {cartItems.quantity}{" "}
                             </div>
                             <button
                               className="qtysub px-3 py-1"
                               onClick={() => {
-                                dispatch(decreaseItemQuantity(cartItems._id))
+                                dispatch(decreaseItemQuantity(cartItems._id));
                               }}
                             >
                               <i className="fa fa-minus" aria-hidden="true"></i>
@@ -174,7 +172,7 @@ export default function Cart() {
                           </div>
                         </div>
                       </div>
-                    )
+                    );
                   })}
                 </div>
                 <div className="col4 col-lg-3">
@@ -195,7 +193,7 @@ export default function Cart() {
                       <div>
                         <button
                           className="btn btn-success"
-                          onClick={() => navigate('/login')}
+                          onClick={() => navigate("/login")}
                         >
                           <LockIcon fontSize="small" /> Checkout(
                           {cur.format(totalAmount)})
@@ -245,5 +243,5 @@ export default function Cart() {
       </div>
       <Footer />
     </div>
-  )
+  );
 }

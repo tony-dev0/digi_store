@@ -1,4 +1,4 @@
-import { cur } from '../currency.js'
+import { cur } from "../currency.js";
 export const TopProductsComponent: React.FC<ProductsProps> = ({
   index,
   product,
@@ -6,7 +6,7 @@ export const TopProductsComponent: React.FC<ProductsProps> = ({
   return (
     <div className="item" key={index}>
       <a href={`/desc/${product._id}`}>
-        <img src={require('../assets/' + product.photos[0])} />
+        <img src={product.photos[0]} />
         <div className="b_text">
           <h5>{cur.format(product.price)}</h5>
           <del>
@@ -15,5 +15,5 @@ export const TopProductsComponent: React.FC<ProductsProps> = ({
         </div>
       </a>
     </div>
-  )
-}
+  );
+};

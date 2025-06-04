@@ -1,0 +1,12 @@
+https://res.cloudinary.com/dq1yugjpq/image/upload/v1742082982/5_cfvumz.jpg
+https://res.cloudinary.com/dq1yugjpq/image/upload/v1742082992/item7_hsrx5z.jpg
+https://res.cloudinary.com/dq1yugjpq/image/upload/v1742082994/item9_uiycxi.jpg
+
+db.products.aggregate([
+  {
+    $addFields: {
+      total_value: { $multiply: ["$price", "$quantity"] }
+   }
+  },  { $out: "products" // Replace the existing collection with the updated documents
+  }]);
+

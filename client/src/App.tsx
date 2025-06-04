@@ -1,46 +1,46 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import PrivateLayout from './components/PrivateLayout'
-import PrivateRoute from './components/PrivateRoute'
-import Overview from './admin/views/overview'
-import Users from './admin/views/users'
-import Products from './admin/views/products'
-import Messages from './admin/views/messages'
-import SiteSettings from './admin/views/site-settings'
-import { Toaster } from 'react-hot-toast'
-import { Home } from './page/home'
-import { Login } from './page/login'
-import { Register } from './page/register'
-import { ErrorPage } from './page/error'
-import PaymentError from './page/payment_error'
-import PaymentSuccess from './page/payment_success'
-import AddOrder from './page/addOrder'
-import Cart from './page/cart'
-import Desc from './page/desc'
-import Search from './page/search'
-import Account from './page/account'
-import Orders from './page/orders'
-import Reviews from './page/reviews'
-import SavedItems from './page/saved-items'
-import Voucher from './page/voucher'
-import Inbox from './page/inbox'
-import AddressBook from './page/address-book'
-import EditAddress from './page/edit-address'
-import NewsletterPreference from './page/newsletter-preference'
-import AdminLayout from './admin/layouts/AdminLayout'
-import AllProducts from './page/products'
-import ViewProduct from './admin/views/subviews/ViewProduct'
-import SearchOrder from './admin/views/search-order'
-import axios from 'axios'
-import './styles/style.css'
-import './styles/ctrl.css'
-import './styles/auth.css'
-import './styles/desc.css'
-import Calender from './admin/views/calender'
-import Category from './page/category'
-import ManageOrders from './admin/views/orders'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import PrivateLayout from "./components/PrivateLayout";
+import PrivateRoute from "./components/PrivateRoute";
+import Overview from "./admin/views/overview";
+import Users from "./admin/views/users";
+import Products from "./admin/views/products";
+import Messages from "./admin/views/messages";
+import SiteSettings from "./admin/views/site-settings";
+import { Toaster } from "react-hot-toast";
+import { Home } from "./page/home";
+import { Login } from "./page/login";
+import { Register } from "./page/register";
+import { ErrorPage } from "./page/error";
+import PaymentError from "./page/payment_error";
+import PaymentSuccess from "./page/payment_success";
+import AddOrder from "./page/addOrder";
+import Cart from "./page/cart";
+import Desc from "./page/desc";
+import Search from "./page/search";
+import Account from "./page/account";
+import Orders from "./page/orders";
+import Reviews from "./page/reviews";
+import SavedItems from "./page/saved-items";
+import Voucher from "./page/voucher";
+import Inbox from "./page/inbox";
+import AddressBook from "./page/address-book";
+import EditAddress from "./page/edit-address";
+import NewsletterPreference from "./page/newsletter-preference";
+import AdminLayout from "./admin/layouts/AdminLayout";
+import AllProducts from "./page/products";
+import ViewProduct from "./admin/views/subviews/ViewProduct";
+import SearchOrder from "./admin/views/search-order";
+import axios from "axios";
+import "./styles/style.css";
+import "./styles/ctrl.css";
+import "./styles/auth.css";
+import "./styles/desc.css";
+import Calender from "./admin/views/calender";
+import Category from "./page/category";
+import ManageOrders from "./admin/views/orders";
 
-axios.defaults.baseURL = process.env.VITE_API_URL
-axios.defaults.withCredentials = true
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+axios.defaults.withCredentials = true;
 
 function App() {
   return (
@@ -98,7 +98,7 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

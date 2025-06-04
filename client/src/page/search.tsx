@@ -1,62 +1,62 @@
-import { toast } from 'react-hot-toast'
-import { Link, useParams } from 'react-router-dom'
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { addItemToCart } from '../redux/cart/cartSlice'
-import { _Navbar } from '../components/Nav'
-import img from '../assets/icons/img.svg'
-import Pagination from '../components/Pagination'
-import { Header } from '../sections/Header'
-import { Footer } from '../sections/Footer'
-import { MainProductsComponent } from '../components/MainProductsComponent'
+import { toast } from "react-hot-toast";
+import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToCart } from "../redux/cart/cartSlice";
+import { _Navbar } from "../components/Nav";
+import img from "../assets/icons/img.svg";
+import Pagination from "../components/Pagination";
+import { Header } from "../sections/Header";
+import { Footer } from "../sections/Footer";
+import { MainProductsComponent } from "../components/MainProductsComponent";
 
 export default function Search() {
-  const year = new Date().getFullYear()
-  const dispatch = useDispatch()
-  const { loader, products } = useSelector((state: any) => state.product)
+  const dispatch = useDispatch();
+  const { loader, products } = useSelector((state: any) => state.product);
   const realProducts = products.filter((product: any) => {
-    return product.category !== 'featured'
-  })
+    return product.category !== "featured";
+  });
   const featuredProduct = products.filter((product: any) => {
-    return product.category == 'featured'
-  })
-  const params = useParams()
-  const search = params.q
-  const searchResult: any[] = []
+    return product.category == "featured";
+  });
+  const params = useParams();
+  const search = params.q;
+  const searchResult: any[] = [];
   realProducts.map((p: any) => {
     if (p.name.toLowerCase().includes(search!.toLowerCase())) {
-      searchResult.push(p)
+      searchResult.push(p);
     }
-  })
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [productsPerPage, setproductsPerPage] = useState<number>(8)
-  const indexofLastProduct = currentPage * productsPerPage
-  const indexofFirstProduct = indexofLastProduct - productsPerPage
+  });
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const productsPerPage = 8; // You can adjust this value as needed
+  // const [productsPerPage, setproductsPerPage] = useState<number>(8);
+  const indexofLastProduct = currentPage * productsPerPage;
+  const indexofFirstProduct = indexofLastProduct - productsPerPage;
   const currentProducts = searchResult.slice(
     indexofFirstProduct,
     indexofLastProduct
-  )
-  const totalProducts = searchResult.length
+  );
+  const totalProducts = searchResult.length;
 
   const addItem = (item: Itemtype) => {
-    dispatch(addItemToCart({ ...item, quantity: 1 }))
-    toast.success('item added to cart')
-  }
+    dispatch(addItemToCart({ ...item, quantity: 1 }));
+    toast.success("item added to cart");
+  };
   const nextPage = (page: number) => {
     if (currentPage < page) {
-      setCurrentPage((val) => val + 1)
+      setCurrentPage((val) => val + 1);
     }
-  }
+  };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage((val) => val - 1)
+      setCurrentPage((val) => val - 1);
     }
-  }
+  };
 
   const paginate = (pageNumber: number) => {
-    setCurrentPage(pageNumber)
-  }
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <>
@@ -68,13 +68,13 @@ export default function Search() {
               <b>All Categories&nbsp; | </b>
             </li>
             {featuredProduct &&
-              featuredProduct.map((fp: { name: string }) => {
-                let ref = '/products/category/' + fp.name.toLowerCase()
+              featuredProduct.map((fp: { name: string }, i: number) => {
+                let ref = "/products/category/" + fp.name.toLowerCase();
                 return (
-                  <li className="list">
+                  <li className="list" key={i}>
                     <Link to={ref}>{fp.name}</Link>
                   </li>
-                )
+                );
               })}
           </ul>
         </div>
@@ -98,7 +98,7 @@ export default function Search() {
           </div>
         </section>
       ) : (
-        <section className="top_items py-5" style={{ backgroundColor: '#fff' }}>
+        <section className="top_items py-5" style={{ backgroundColor: "#fff" }}>
           <nav className="breadcrumb-divider mt-5" aria-label="breadcrumb">
             <ol className="breadcrumb ms-2">
               <li className="breadcrumb-item">
@@ -121,14 +121,14 @@ export default function Search() {
               Showing {indexofFirstProduct + 1}-
               {indexofLastProduct > totalProducts
                 ? totalProducts
-                : indexofLastProduct}{' '}
+                : indexofLastProduct}{" "}
               products from {totalProducts} products
             </h5>
           </div>
 
           <div className="wrapper-container mb-4">
             {loader
-              ? 'loading'
+              ? "loading"
               : currentProducts.map((product: Itemtype, i: any) => {
                   return (
                     <MainProductsComponent
@@ -136,7 +136,7 @@ export default function Search() {
                       product={product}
                       addItem={() => addItem(product)}
                     />
-                  )
+                  );
                 })}
           </div>
 
@@ -154,5 +154,5 @@ export default function Search() {
       )}
       <Footer />
     </>
-  )
+  );
 }

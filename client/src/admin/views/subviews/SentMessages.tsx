@@ -1,113 +1,113 @@
-import { Delete } from '@mui/icons-material'
-import CloseIcon from '@mui/icons-material/Close'
-import { Box, CircularProgress, Modal, Typography } from '@mui/material'
-import Fab from '@mui/material/Fab'
-import axios from 'axios'
-import { useState } from 'react'
-import toast from 'react-hot-toast'
-import { dateFormat, timeDifference } from '../../../page/timeFunction'
-import { useDispatch, useSelector } from 'react-redux'
+import { Delete } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
+import { Box, CircularProgress, Modal, Typography } from "@mui/material";
+import Fab from "@mui/material/Fab";
+import axios from "axios";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { dateFormat, timeDifference } from "../../../page/timeFunction";
+import { useDispatch, useSelector } from "react-redux";
 import {
   deleteSentNotification,
   removeRecipient,
-} from '../../../redux/admin/adminSlice'
-import { styled } from '@mui/material/styles'
-import Badge, { badgeClasses } from '@mui/material/Badge'
+} from "../../../redux/admin/adminSlice";
+import { styled } from "@mui/material/styles";
+import Badge, { badgeClasses } from "@mui/material/Badge";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '0.5px solid #000',
+  bgcolor: "background.paper",
+  border: "0.5px solid #000",
   boxShadow: 24,
   p: 4,
-}
+};
 
 const CloseBadge: any = styled(Badge)`
   & .${badgeClasses.badge} {
     background: #ed425a;
   }
-`
+`;
 
 export default function SentMessages() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { sent_notifications } = useSelector((state: any) => state.admin)
-  const [id, setID] = useState<any>('')
-  const [open, setOpen] = useState(false)
+  const { sent_notifications } = useSelector((state: any) => state.admin);
+  const [id, setID] = useState<any>("");
+  const [open, setOpen] = useState(false);
   const handleOpen = (event: any) => {
-    setID(event.currentTarget.getAttribute('msg-id'))
-    setOpen(true)
-  }
-  const [loading, setLoading] = useState(false)
-  const handleClose = () => setOpen(false)
+    setID(event.currentTarget.getAttribute("msg-id"));
+    setOpen(true);
+  };
+  const [loading, setLoading] = useState(false);
+  const handleClose = () => setOpen(false);
 
   const handleClick = (event: any) => {
-    const recipientid = event.currentTarget.getAttribute('rn-id')
-    const email = event.currentTarget.getAttribute('rn-email')
+    const recipientid = event.currentTarget.getAttribute("rn-id");
+    const email = event.currentTarget.getAttribute("rn-email");
     const obj = {
       id: recipientid,
       email: email,
-    }
+    };
     axios
       .put(`/api/notifications/out/${recipientid}`, obj)
       .then(() => {
-        dispatch(removeRecipient(obj))
+        dispatch(removeRecipient(obj));
         toast.success(
-          'Action Confirmed. recipient will no longer see this notification'
-        )
+          "Action Confirmed. recipient will no longer see this notification"
+        );
       })
       .catch(() => {
-        toast.error('an error occurred')
-      })
-  }
+        toast.error("an error occurred");
+      });
+  };
 
   const handleSubmit = async () => {
-    setLoading(true)
+    setLoading(true);
     setTimeout(async () => {
       axios
         .delete(`/api/notifications/out/${id}`)
         .then(() => {
-          dispatch(deleteSentNotification(id))
-          setOpen(false)
-          toast.success('Message deleted successfully')
+          dispatch(deleteSentNotification(id));
+          setOpen(false);
+          toast.success("Message deleted successfully");
         })
         .catch((err) => {
-          toast.error('An error occured')
-          console.log(err)
-          setOpen(false)
-          return
-        })
-      setLoading(false)
-    }, 2000)
-  }
+          toast.error("An error occured");
+          console.log(err);
+          setOpen(false);
+          return;
+        });
+      setLoading(false);
+    }, 2000);
+  };
 
   return (
     <div>
       <div className="row">
         {sent_notifications &&
-          sent_notifications.map((rn: sent_notifications) => {
+          sent_notifications.map((rn: sent_notifications, i: number) => {
             return (
-              <div className="mb-4 col-lg-6">
+              <div className="mb-4 col-lg-6" key={i}>
                 <div className="revmsgbox">
                   <Fab
                     msg-id={rn._id}
                     sx={{
-                      '&:hover': {
-                        backgroundColor: '#c33',
+                      "&:hover": {
+                        backgroundColor: "#c33",
                         opacity: 0.8,
                       },
                       zIndex: 1,
-                      position: 'absolute',
+                      position: "absolute",
                       top: 6,
                       right: 15,
                       width: 35,
                       height: 35,
-                      backgroundColor: '#c33',
-                      color: 'white',
+                      backgroundColor: "#c33",
+                      color: "white",
                     }}
                     onClick={handleOpen}
                   >
@@ -118,9 +118,9 @@ export default function SentMessages() {
                   <p>Message </p>
                   <div className="msgbox">{rn.message}</div>
                   <div className="msg-footer">
-                    {rn.recipients.map((email) => {
+                    {rn.recipients.map((email, i: any) => {
                       return (
-                        <div className="recipients-wrapper">
+                        <div className="recipients-wrapper" key={i}>
                           <div className="mx-2 recipients px-2 py-2 my-1">
                             <div
                               className="rnbadge"
@@ -130,7 +130,7 @@ export default function SentMessages() {
                             >
                               <CloseBadge
                                 badgeContent={
-                                  <CloseIcon sx={{ fontSize: '10px' }} />
+                                  <CloseIcon sx={{ fontSize: "10px" }} />
                                 }
                                 color="primary"
                                 overlap="circular"
@@ -139,7 +139,7 @@ export default function SentMessages() {
                             <div className="reecipients-box">{email}</div>
                           </div>
                         </div>
-                      )
+                      );
                     })}
                   </div>
                   <div className="content-footer-body">
@@ -150,7 +150,7 @@ export default function SentMessages() {
                   </div>
                 </div>
               </div>
-            )
+            );
           })}
       </div>
 
@@ -181,10 +181,10 @@ export default function SentMessages() {
               {loading ? (
                 <CircularProgress
                   size={15}
-                  sx={{ color: '#fff', marginRight: '10px' }}
+                  sx={{ color: "#fff", marginRight: "10px" }}
                 />
               ) : (
-                ''
+                ""
               )}
               Confirm Delete
             </button>
@@ -192,5 +192,5 @@ export default function SentMessages() {
         </Box>
       </Modal>
     </div>
-  )
+  );
 }

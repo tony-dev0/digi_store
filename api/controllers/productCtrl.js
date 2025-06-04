@@ -1,5 +1,5 @@
 import Product from "../models/Product.js";
-// import cloudinary from "../index.js";
+import cloudinary from "../index.js";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
@@ -13,6 +13,7 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
+
 // Add file type validation
 const upload = multer({
   storage: storage,
@@ -29,79 +30,53 @@ const upload = multer({
 
 // Check file type
 function checkFileType(file, cb) {
-  const filetypes = /jpeg|jpg|png/;
+  const filetypes = /jpeg|jpg|png|webp/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
 
   if (mimetype && extname) {
     return cb(null, true);
   } else {
-    cb("Error: Images only! (jpeg, jpg, png)");
+    cb("Error: Images only! (jpeg, jpg, png, webp)");
   }
 }
 
 // Create a new Product (upload image of product and save product info in DB)
 export const createProduct = async (req, res, next) => {
-  await upload(req, res, (err) => {
+  await upload(req, res, async (err) => {
     if (err) {
-      console.logor(err);
+      console.log(err);
       return res.status(500).json({ error: err });
     }
     if (!req.files) {
       return res.status(400).json({ error: "Please send file" });
     }
-    const imageName1 = req.files.img1[0].filename;
-    const oldPath1 = req.files.img1[0].path;
-    let newPath1 = path.join("client", "src", "assets", "images", imageName1);
+    let imagePath1 = path.join("uploads", req.files.img1[0].filename);
+    let imagePath2 = path.join("uploads", req.files.img2[0].filename);
+    let imagePath3 = path.join("uploads", req.files.img3[0].filename);
+    let imagePath4 = path.join("uploads", req.files.img4[0].filename);
 
-    const imageName2 = req.files.img2[0].filename;
-    const oldPath2 = req.files.img2[0].path;
-    let newPath2 = path.join("client", "src", "assets", "images", imageName2);
-
-    const imageName3 = req.files.img3[0].filename;
-    const oldPath3 = req.files.img3[0].path;
-    let newPath3 = path.join("client", "src", "assets", "images", imageName3);
-
-    const imageName4 = req.files.img4[0].filename;
-    const oldPath4 = req.files.img4[0].path;
-    let newPath4 = path.join("client", "src", "assets", "images", imageName4);
-
-    //Create the assets/images folder if it doesn't exist
-    const dir = path.join("client", "src", "assets", "images");
-
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    // Move image file to assets/images
-    fs.rename(oldPath1, newPath1, (err) => {
-      if (err) throw err;
-    });
-    fs.rename(oldPath2, newPath2, (err) => {
-      if (err) throw err;
-    });
-    fs.rename(oldPath3, newPath3, (err) => {
-      if (err) throw err;
-    });
-    fs.rename(oldPath4, newPath4, (err) => {
-      if (err) throw err;
-    });
-
-    newPath1 = "images/" + imageName1;
-    newPath2 = "images/" + imageName2;
-    newPath3 = "images/" + imageName3;
-    newPath4 = "images/" + imageName4;
-
-    // upload to cloudinary
-    // cloudinary.uploader.upload(
-    //   "client/src/assets/" + newPath1,
-    //   function (err, result) {
-    //     if (err) {
-    //       console.log("Cloudinary ERR ", err);
-    //       return res.status(500).json("error uploading to cloud");
-    //     }
-    //     console.log(result);
-    // save to db
     try {
+      // Upload all images to Cloudinary
+      const uploadToCloudinary = (imgPath) => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload(imgPath, (err, result) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result.secure_url);
+            }
+          });
+        });
+      };
+
+      const photoUrls = await Promise.all([
+        uploadToCloudinary(imagePath1),
+        uploadToCloudinary(imagePath2),
+        uploadToCloudinary(imagePath3),
+        uploadToCloudinary(imagePath4),
+      ]);
+
       const newProduct = new Product({
         name: req.body.name,
         price: Number(req.body.price),
@@ -111,21 +86,18 @@ export const createProduct = async (req, res, next) => {
         category: req.body.category,
         description: req.body.description,
         available: req.body.units,
-        photos: [newPath1, newPath2, newPath3, newPath4],
-        // imageurl: result.secure_url,
-        imageurl: "https://blahblah.com",
+        photos: photoUrls,
+        imageUrl: photoUrls[0],
       });
-      async function saveDB() {
-        const savedProduct = await newProduct.save();
-        return res.status(200).json(savedProduct);
-      }
-      saveDB();
+      const savedProduct = await newProduct.save();
+      return res.status(200).json(savedProduct);
     } catch (err) {
       console.log("Error during file upload:", err);
       next(err);
     }
   });
 };
+
 // GET ALL PRODUCT
 export const getProducts = async (req, res, next) => {
   try {
@@ -148,7 +120,7 @@ export const getProduct = async (req, res, next) => {
 export const updateProduct = async (req, res, next) => {
   await upload(req, res, async (err) => {
     if (err) {
-      console.logor(err);
+      console.log(err);
       return res.status(500).json({ error: err });
     }
     if (
@@ -159,54 +131,38 @@ export const updateProduct = async (req, res, next) => {
     ) {
       return res.status(400).json({ error: "Please send all required files" });
     }
-    const imageName1 = req.files.img1[0].filename;
-    const oldPath1 = req.files.img1[0].path;
-    let newPath1 = path.join("client", "src", "assets", "images", imageName1);
+    let imagePath1 = path.join("uploads", req.files.img1[0].filename);
+    let imagePath2 = path.join("uploads", req.files.img2[0].filename);
+    let imagePath3 = path.join("uploads", req.files.img3[0].filename);
+    let imagePath4 = path.join("uploads", req.files.img4[0].filename);
 
-    const imageName2 = req.files.img2[0].filename;
-    const oldPath2 = req.files.img2[0].path;
-    let newPath2 = path.join("client", "src", "assets", "images", imageName2);
-
-    const imageName3 = req.files.img3[0].filename;
-    const oldPath3 = req.files.img3[0].path;
-    let newPath3 = path.join("client", "src", "assets", "images", imageName3);
-
-    const imageName4 = req.files.img4[0].filename;
-    const oldPath4 = req.files.img4[0].path;
-    let newPath4 = path.join("client", "src", "assets", "images", imageName4);
-
-    //Create the assets/images folder if it doesn't exist
-    const dir = path.join("client", "src", "assets", "images");
-
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    // Move image file to assets/images
-    fs.rename(oldPath1, newPath1, (err) => {
-      if (err) throw err;
-    });
-    fs.rename(oldPath2, newPath2, (err) => {
-      if (err) throw err;
-    });
-    fs.rename(oldPath3, newPath3, (err) => {
-      if (err) throw err;
-    });
-    fs.rename(oldPath4, newPath4, (err) => {
-      if (err) throw err;
-    });
-
-    newPath1 = "images/" + imageName1;
-    newPath2 = "images/" + imageName2;
-    newPath3 = "images/" + imageName3;
-    newPath4 = "images/" + imageName4;
-
-    const photos = [newPath1, newPath2, newPath3, newPath4];
-    let { name, type, category, keyword, price, units, description } = req.body;
-    const keywords = keyword.split(" ");
-    const available = units;
-    price = Number(price);
     try {
+      // Upload all images to Cloudinary
+      const uploadToCloudinary = (imgPath) => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload(imgPath, (err, result) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result.secure_url);
+            }
+          });
+        });
+      };
+
+      const photoUrls = await Promise.all([
+        uploadToCloudinary(imagePath1),
+        uploadToCloudinary(imagePath2),
+        uploadToCloudinary(imagePath3),
+        uploadToCloudinary(imagePath4),
+      ]);
+
       const { id } = req.params;
+      let { name, type, category, keyword, price, units, description } =
+        req.body;
+      const keywords = keyword.split(" ");
+      const available = units;
+      price = Number(price);
       const updatedProduct = await Product.findByIdAndUpdate(
         id,
         {
@@ -218,15 +174,17 @@ export const updateProduct = async (req, res, next) => {
             keywords: keywords,
             price: price,
             available: available,
-            photos: photos,
+            photos: photoUrls,
             description: description,
-            imageurl: "https://blahblah.com",
+            imageurl: photoUrls[0],
           },
         },
         { new: true }
       );
       if (!updatedProduct) {
-        console.log("an error occurred id not found");
+        console.log(
+          "an error occurred item not updated likely the id not found"
+        );
       }
       res.status(200).json(updatedProduct);
     } catch (err) {
@@ -234,6 +192,7 @@ export const updateProduct = async (req, res, next) => {
     }
   });
 };
+
 // DELETE
 export const deleteproduct = async (req, res, next) => {
   try {

@@ -1,14 +1,14 @@
-import { loadStripe } from '@stripe/stripe-js'
-import { useSelector } from 'react-redux'
-import { cur } from '../currency.js'
-import axios from 'axios'
+import { loadStripe } from "@stripe/stripe-js";
+import { useSelector } from "react-redux";
+import { cur } from "../currency.js";
+import axios from "axios";
 
 function filterArr(originalArray: Itemtype[]) {
   const newArray = originalArray.map((obj) => {
-    const { _id, name, price, photos, quantity } = obj
-    return { _id, name, price, image: photos[0], quantity }
-  })
-  return newArray
+    const { _id, name, price, photos, quantity } = obj;
+    return { _id, name, price, image: photos[0], quantity };
+  });
+  return newArray;
 }
 
 export const CheckoutBtn: React.FC<CheckoutBtnProps> = ({
@@ -16,15 +16,15 @@ export const CheckoutBtn: React.FC<CheckoutBtnProps> = ({
   totalAmount,
   totalQuantity,
 }) => {
-  const { currentUser } = useSelector((state: any) => state.user)
-  const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY
-  const stripePromise = loadStripe(publishableKey)
+  const { currentUser } = useSelector((state: any) => state.user);
+  const publishableKey = import.meta.env.STRIPE_PUBLISHABLE_KEY;
+  const stripePromise = loadStripe(publishableKey);
 
   const handleCheckout = async () => {
-    const new_order = filterArr(products)
-    const stripe = await stripePromise
+    const new_order = filterArr(products);
+    const stripe = await stripePromise;
     axios
-      .post('api/checkout-session', {
+      .post("api/checkout-session", {
         user_id: currentUser?._id,
         items: new_order,
         email: currentUser?.email,
@@ -32,13 +32,13 @@ export const CheckoutBtn: React.FC<CheckoutBtnProps> = ({
         amount: totalAmount,
       })
       .then((res: any) => {
-        console.log(res.data)
+        console.log(res.data);
         return stripe?.redirectToCheckout({
           sessionId: res.data.id,
-        })
+        });
       })
-      .catch((error) => window.alert(error?.message))
-  }
+      .catch((error) => window.alert(error?.message));
+  };
 
   return (
     <div className="mt-6">
@@ -52,7 +52,7 @@ export const CheckoutBtn: React.FC<CheckoutBtnProps> = ({
         </button>
       ) : (
         <button className="btn btn-success">
-          {' '}
+          {" "}
           Checkout {cur.format(totalAmount)}
         </button>
       )}
@@ -62,7 +62,7 @@ export const CheckoutBtn: React.FC<CheckoutBtnProps> = ({
         </p>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default CheckoutBtn
+export default CheckoutBtn;

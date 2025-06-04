@@ -1,13 +1,7 @@
 {
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "jsx": "react-jsx",
-    "module": "esnext",
-    "target": "esnext",
-    "allowJs": true,
-    "moduleResolution": "node"
-  },
-  "include": ["**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }

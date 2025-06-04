@@ -1,82 +1,82 @@
-import { Delete } from '@mui/icons-material'
-import { Box, CircularProgress, Modal, Typography } from '@mui/material'
-import Fab from '@mui/material/Fab'
-import axios from 'axios'
-import { useRef, useState } from 'react'
-import toast from 'react-hot-toast'
-import { dateFormat, timeDifference } from '../../../page/timeFunction'
-import { useDispatch, useSelector } from 'react-redux'
-import { deleteRecievedNotification } from '../../../redux/admin/adminSlice'
+import { Delete } from "@mui/icons-material";
+import { Box, CircularProgress, Modal, Typography } from "@mui/material";
+import Fab from "@mui/material/Fab";
+import axios from "axios";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { dateFormat, timeDifference } from "../../../page/timeFunction";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteRecievedNotification } from "../../../redux/admin/adminSlice";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '0.5px solid #000',
+  bgcolor: "background.paper",
+  border: "0.5px solid #000",
   boxShadow: 24,
   p: 4,
-}
+};
 
 export default function RecievedMessages() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { recieved_notifications } = useSelector((state: any) => state.admin)
-  const [id, setID] = useState<any>('')
-  const [open, setOpen] = useState(false)
+  const { recieved_notifications } = useSelector((state: any) => state.admin);
+  const [id, setID] = useState<any>("");
+  const [open, setOpen] = useState(false);
 
   const handleOpen = (event: any) => {
-    setID(event.currentTarget.getAttribute('msg-id'))
-    setOpen(true)
-  }
+    setID(event.currentTarget.getAttribute("msg-id"));
+    setOpen(true);
+  };
 
-  const handleClose = () => setOpen(false)
-  const [loading, setLoading] = useState(false)
+  const handleClose = () => setOpen(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    setLoading(true)
+    setLoading(true);
     setTimeout(async () => {
       axios
         .delete(`/api/notifications/in/${id}`)
         .then(() => {
-          dispatch(deleteRecievedNotification(id))
-          setOpen(false)
-          toast.success('Message deleted successfully')
+          dispatch(deleteRecievedNotification(id));
+          setOpen(false);
+          toast.success("Message deleted successfully");
         })
         .catch((err) => {
-          toast.error('An error occured')
-          console.log(err)
-          setOpen(false)
-          return
-        })
-      setLoading(false)
-    }, 2000)
-  }
+          toast.error("An error occured");
+          console.log(err);
+          setOpen(false);
+          return;
+        });
+      setLoading(false);
+    }, 2000);
+  };
 
   return (
     <div>
       <div className="row">
-        {recieved_notifications.map((rn: recieved_notifications) => {
+        {recieved_notifications.map((rn: recieved_notifications, i: number) => {
           return (
-            <div className="mb-4 col-lg-6">
+            <div className="mb-4 col-lg-6" key={i}>
               <div className="revmsgbox">
                 <Fab
                   msg-id={rn._id}
                   sx={{
-                    '&:hover': {
-                      backgroundColor: '#c33',
+                    "&:hover": {
+                      backgroundColor: "#c33",
                       opacity: 0.8,
                     },
                     zIndex: 1,
-                    position: 'absolute',
+                    position: "absolute",
                     top: 6,
                     right: 15,
                     width: 35,
                     height: 35,
-                    backgroundColor: '#c33',
-                    color: 'white',
+                    backgroundColor: "#c33",
+                    color: "white",
                   }}
                   onClick={handleOpen}
                 >
@@ -97,7 +97,7 @@ export default function RecievedMessages() {
                 </div>
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -128,10 +128,10 @@ export default function RecievedMessages() {
               {loading ? (
                 <CircularProgress
                   size={15}
-                  sx={{ color: '#fff', marginRight: '10px' }}
+                  sx={{ color: "#fff", marginRight: "10px" }}
                 />
               ) : (
-                ''
+                ""
               )}
               Confirm Delete
             </button>
@@ -139,5 +139,5 @@ export default function RecievedMessages() {
         </Box>
       </Modal>
     </div>
-  )
+  );
 }

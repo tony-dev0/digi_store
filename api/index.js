@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-// import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import productRoute from "./routes/products.js";
@@ -17,26 +17,14 @@ const app = express();
 dotenv.config();
 
 // cloudinary configuration
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_CLOUD_SECRET,
-// });
-
-// export const updateProduct = async (req, res, next) => {
-//   const { name, price, units } = req.body;
-//   try {
-//     console.log(req.body);
-//     const updatedProduct = await Product.findByIdAndUpdate(
-//       req.params.id,
-//       { $set: { name: name, price: price, unit: units } },
-//       { new: true }
-//     );
-//     res.status(200).json(updatedProduct);
-//   } catch (err) {
-//     next(err);
-//   }
-//};
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_CLOUD_SECRET,
+});
+app.get("/", (req, res) => {
+  res.send("Welcome to the Digi Store API");
+});
 
 app.use(
   cors({
@@ -82,4 +70,4 @@ app.listen(8000, () => {
   console.log("listening");
 });
 
-// export default cloudinary;
+export default cloudinary;

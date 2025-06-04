@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from "react";
 import {
   AccordionBody,
   AccordionHeader,
@@ -8,132 +8,141 @@ import {
   NavLink,
   TabContent,
   TabPane,
-  UncontrolledAccordion,
-} from 'reactstrap'
-import axios from 'axios'
-import toast from 'react-hot-toast'
-import { cur } from '../../currency.js'
+  Accordion,
+} from "reactstrap";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { cur } from "../../currency.js";
 import {
   storeOrders,
   closeOrder,
   deleteOrder,
-} from '../../redux/admin/adminSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import CircularProgress from '@mui/material/CircularProgress'
-import Modal from 'react-bootstrap/Modal'
-import Typography from '@mui/material/Typography'
-import Search from '../components/Search'
+} from "../../redux/admin/adminSlice";
+import { useDispatch, useSelector } from "react-redux";
+import CircularProgress from "@mui/material/CircularProgress";
+import Modal from "react-bootstrap/Modal";
+import Typography from "@mui/material/Typography";
+import Search from "../components/Search";
 
 export default function Orders() {
-  const dispatch = useDispatch()
-  const [loading, setLoading] = useState(false)
-  const [open, setOpen] = useState(false)
-  const openModal = () => setOpen(true)
-  const closeModal = () => setOpen(false)
-  const [id, setID] = useState<any>('')
-  const { orders } = useSelector((state: any) => state.admin)
-  const [openOrders, setOpenOrders] = useState([])
-  const [closeOrders, setCloseOrders] = useState([])
-  const [active, setActive] = useState(true)
-  const [activeTab, setactiveTab] = useState(1)
-  let tab1 = 1
-  let tab2 = 2
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [ontab1, setOntab1] = useState("");
+  const [ontab2, setOntab2] = useState("");
+  // const openModal = () => setOpen(true);
+  const closeModal = () => setOpen(false);
+  const [id, setID] = useState<any>("");
+  const { orders } = useSelector((state: any) => state.admin);
+  const [openOrders, setOpenOrders] = useState([]);
+  const [closeOrders, setCloseOrders] = useState([]);
+  const [active, setActive] = useState(true);
+  const [activeTab, setactiveTab] = useState(1);
+  let tab1 = 1;
+  let tab2 = 2;
+
+  const toggleOpenOrders = (id: string) => {
+    setOntab1(ontab1 === id ? "" : id);
+  };
+  const toggleCloseOrders = (id: string) => {
+    setOntab2(ontab2 === id ? "" : id);
+  };
 
   const handleFirstTab = () => {
-    setActive(true)
-    setactiveTab(1)
-  }
+    setActive(true);
+    setactiveTab(1);
+  };
 
   const handleSecondTab = () => {
-    setActive(false)
-    setactiveTab(2)
-  }
+    setActive(false);
+    setactiveTab(2);
+  };
 
   useLayoutEffect(() => {
     axios
-      .get('/api/orders/')
+      .get("/api/orders/")
       .then((res: any) => {
-        dispatch(storeOrders(res.data.reverse()))
+        dispatch(storeOrders(res.data.reverse()));
       })
       .catch((err) => {
-        toast.error('An error occurred')
-        console.log(err)
-      })
-  }, [])
+        toast.error("An error occurred");
+        console.log(err);
+      });
+  }, []);
 
   useLayoutEffect(() => {
-    if (!orders) return
+    if (!orders) return;
 
-    const arropen = orders.filter((o: any) => o.status === 'open')
-    const arrclose = orders.filter((c: any) => c.status === 'closed')
+    const arropen = orders.filter((o: any) => o.status === "open");
+    const arrclose = orders.filter((c: any) => c.status === "closed");
 
-    setOpenOrders(arropen)
-    setCloseOrders(arrclose)
-  }, [orders])
+    setOpenOrders(arropen);
+    setCloseOrders(arrclose);
+  }, [orders]);
 
   const handleOpen = (event: any) => {
-    setID(event.currentTarget.getAttribute('order-id'))
-    setOpen(true)
-  }
+    setID(event.currentTarget.getAttribute("order-id"));
+    setOpen(true);
+  };
 
   const HandleDelete = (id: string) => {
-    setLoading(true)
+    setLoading(true);
     setTimeout(() => {
       axios
         .delete(`/api/orders/${id}`)
         .then((res) => {
-          if (res.statusText == 'OK') {
-            dispatch(deleteOrder(id))
-            setOpen(false)
-            setLoading(false)
-            toast.success('deleted successfully')
+          if (res.statusText == "OK") {
+            dispatch(deleteOrder(id));
+            setOpen(false);
+            setLoading(false);
+            toast.success("deleted successfully");
           }
         })
         .catch((err) => {
-          console.log(err)
-          toast.error('failed to delete order')
-          setLoading(false)
-        })
-    }, 2000)
-  }
+          console.log(err);
+          toast.error("failed to delete order");
+          setLoading(false);
+        });
+    }, 2000);
+  };
 
   const HandleClose = (id: string) => {
     axios
       .put(`/api/orders/${id}`)
       .then((res) => {
-        if (res.statusText == 'OK') {
-          toast.success('order closed successfully')
-          dispatch(closeOrder(id))
+        if (res.statusText == "OK") {
+          toast.success("order closed successfully");
+          dispatch(closeOrder(id));
         }
       })
       .catch((err) => {
-        console.log(err)
-        toast.error('failed to close order')
-      })
-  }
+        console.log(err);
+        toast.error("failed to close order");
+      });
+  };
 
   return (
     <div>
-      <div className="mtg mb-3" style={{ borderBottom: '1px solid #dbd0d0' }}>
-        <h3>Orders({!orders ? '0' : orders.length})</h3>
+      <div className="mtg mb-3" style={{ borderBottom: "1px solid #dbd0d0" }}>
+        <h3>Orders({!orders ? "0" : orders.length})</h3>
       </div>
       <div className="d-flex justify-content-end me-2 mb-3">
         <Search />
       </div>
-      <div className="" style={{ height: '70vh', overflow: 'auto' }}>
+      <div className="" style={{ height: "70vh", overflow: "auto" }}>
         <div className="nav-tab-slide">
           <Nav tabs>
-            <NavItem style={{ cursor: 'pointer', color: '#000' }}>
+            <NavItem style={{ cursor: "pointer", color: "#000" }}>
               <NavLink
-                className={active ? 'active' : ''}
+                className={active ? "active" : ""}
                 onClick={handleFirstTab}
               >
                 OPEN ORDERS({openOrders?.length})
               </NavLink>
             </NavItem>
-            <NavItem style={{ cursor: 'pointer', color: '#000' }}>
+            <NavItem style={{ cursor: "pointer", color: "#000" }}>
               <NavLink
-                className={active ? '' : 'active'}
+                className={active ? "" : "active"}
                 onClick={handleSecondTab}
               >
                 CLOSED ORDERS({closeOrders?.length})
@@ -152,7 +161,7 @@ export default function Orders() {
           ) : (
             <TabContent activeTab={activeTab}>
               <TabPane tabId={tab1}>
-                <UncontrolledAccordion>
+                <Accordion open={ontab1} toggle={toggleOpenOrders}>
                   {openOrders?.map((order: any, index: number) => {
                     return (
                       <AccordionItem key={index}>
@@ -171,7 +180,7 @@ export default function Orders() {
                               <div className="order-wrap d-flex gap-3" key={i}>
                                 <div className="order-img">
                                   <img
-                                    src={require('../../assets/' + p.photo)}
+                                    src={p.photo}
                                     alt=""
                                     width={100}
                                     height={110}
@@ -185,14 +194,14 @@ export default function Orders() {
                                     <p>Quantity: {p.quantity}</p>
                                     <p>Price: {cur.format(p.price)}</p>
                                     <p>
-                                      SubTotal:{' '}
+                                      SubTotal:{" "}
                                       {cur.format(p.price * p.quantity)}
                                     </p>
                                   </div>
-                                  <hr style={{ width: '150px' }} />
+                                  <hr style={{ width: "150px" }} />
                                 </div>
                               </div>
-                            )
+                            );
                           })}
                           <div className="action d-flex gap-4">
                             <button
@@ -211,13 +220,13 @@ export default function Orders() {
                           </div>
                         </AccordionBody>
                       </AccordionItem>
-                    )
+                    );
                   })}
-                </UncontrolledAccordion>
+                </Accordion>
               </TabPane>
 
               <TabPane tabId={tab2}>
-                <UncontrolledAccordion>
+                <Accordion open={ontab2} toggle={toggleCloseOrders}>
                   {closeOrders?.map((order: any, index: number) => {
                     return (
                       <AccordionItem key={index}>
@@ -236,7 +245,7 @@ export default function Orders() {
                               <div className="order-wrap d-flex gap-3" key={i}>
                                 <div className="order-img">
                                   <img
-                                    src={require('../../assets/' + p.photo)}
+                                    src={p.photo}
                                     alt=""
                                     width={100}
                                     height={110}
@@ -250,14 +259,14 @@ export default function Orders() {
                                     <p>Quantity: {p.quantity}</p>
                                     <p>Price: {cur.format(p.price)}</p>
                                     <p>
-                                      SubTotal:{' '}
+                                      SubTotal:{" "}
                                       {cur.format(p.price * p.quantity)}
                                     </p>
                                   </div>
                                   {i !== order.products.length - 1 && <hr />}
                                 </div>
                               </div>
-                            )
+                            );
                           })}
                           <div className="action d-flex gap-4">
                             <button
@@ -270,9 +279,9 @@ export default function Orders() {
                           </div>
                         </AccordionBody>
                       </AccordionItem>
-                    )
+                    );
                   })}
-                </UncontrolledAccordion>
+                </Accordion>
               </TabPane>
             </TabContent>
           )}
@@ -302,10 +311,10 @@ export default function Orders() {
               {loading ? (
                 <CircularProgress
                   size={15}
-                  sx={{ color: '#fff', marginRight: '10px' }}
+                  sx={{ color: "#fff", marginRight: "10px" }}
                 />
               ) : (
-                ''
+                ""
               )}
               Confirm Delete
             </button>
@@ -313,5 +322,5 @@ export default function Orders() {
         </Modal.Footer>
       </Modal>
     </div>
-  )
+  );
 }

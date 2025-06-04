@@ -1,4 +1,4 @@
-import { cur } from '../currency.js'
+import { cur } from "../currency.js";
 
 export const MainProductsComponent: React.FC<ProductsProps> = ({
   product,
@@ -9,13 +9,13 @@ export const MainProductsComponent: React.FC<ProductsProps> = ({
     <div className="item mtl mtl_box" key={index}>
       <a href={`/desc/${product._id}`}>
         <div className="img-wrapper">
-          <img src={require('../assets/' + product.photos[0])} alt="" />
+          <img src={product.photos[0]} alt="" />
         </div>
         <div className="b_text px-3">
           <div className="productTitle">
             <h6>
               {product.name.length > 40
-                ? product.name.slice(0, 40) + '...'
+                ? product.name.slice(0, 40) + "..."
                 : product.name}
             </h6>
           </div>
@@ -37,5 +37,5 @@ export const MainProductsComponent: React.FC<ProductsProps> = ({
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
