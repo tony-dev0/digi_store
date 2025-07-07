@@ -65,12 +65,12 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Snapshot
 
-<img width="1258" alt="Screenshot 2023-08-13 at 11 05 22 PM" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image1.png">
-<img width="1258" alt="Screenshot 2023-08-13 at 11 05 22 PM" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image2.png">
-<img width="1258" alt="Screenshot 2023-08-13 at 11 05 22 PM" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image3.png">
-<img width="1258" alt="Screenshot 2023-08-13 at 11 05 22 PM" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image4.png">
-<img width="1258" alt="Screenshot 2023-08-13 at 11 05 22 PM" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image5.png">
-<img width="1258" alt="Screenshot 2023-08-13 at 11 05 22 PM" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image6.png">
+<img width="1258" alt="project preview 1" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image1">
+<img width="1258" alt="project preview 2" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image2">
+<img width="1258" alt="project preview 3" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image3">
+<img width="1258" alt="project preview 4" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image4">
+<img width="1258" alt="project preview 5" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image5">
+<img width="1258" alt="project preview 6" src="https://github.com/tony-dev0/digi_store/client/public/screenshots/image6">
 
 ## Contributing
 
