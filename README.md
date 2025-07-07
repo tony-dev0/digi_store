@@ -66,10 +66,25 @@ It correctly bundles React in production mode and optimizes the build for the be
 ## Snapshot
 
 <img width="1258" alt="project preview 1" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/image1.png">
+
+### Product Description
+
 <img width="1258" alt="project preview 2" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/image2.png">
+
+### Cart
+
 <img width="1258" alt="project preview 3" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/image3.png">
+
+### Payment Gateway (Stripe)
+
 <img width="1258" alt="project preview 4" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/image4.png">
+
+### Payment Success
+
 <img width="1258" alt="project preview 5" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/image5.png">
+
+### View Orders (Open/closed)
+
 <img width="1258" alt="project preview 6" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/image6.png">
 
 ## Contributing
