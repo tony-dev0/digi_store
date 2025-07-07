@@ -1,4 +1,4 @@
-import voucher from '../assets/icons/acct/voucher.svg'
+import voucher from "../assets/icons/acct/voucher.svg";
 
 export default function Voucher() {
   return (
@@ -49,7 +49,7 @@ export default function Voucher() {
             <p className="mt-3">
               All your available Vouchers will be displayed here
             </p>
-            <a href="index.html">
+            <a href="/">
               <button className="my-3 btn btn-success rounded-3">
                 CONTINUE SHOPPING
               </button>
@@ -77,5 +77,5 @@ export default function Voucher() {
         </div>
       </div>
     </>
-  )
+  );
 }

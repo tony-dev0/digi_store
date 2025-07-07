@@ -1,17 +1,17 @@
-import success from '../assets/icons/check.png'
-import { Header } from '../sections/Header'
-import { Footer } from '../sections/Footer'
-import { clearCart } from '../redux/cart/cartSlice'
-import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import success from "../assets/icons/check.png";
+import { Header } from "../sections/Header";
+import { Footer } from "../sections/Footer";
+import { clearCart } from "../redux/cart/cartSlice";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function paymentSuccess() {
-  const dispatch = useDispatch()
-  dispatch(clearCart())
+  const dispatch = useDispatch();
+  dispatch(clearCart());
   return (
     <div>
       <Header />
-      <div className="py-5" style={{ background: '#fff' }}>
+      <div className="py-5" style={{ background: "#fff" }}>
         <section className="msg-section my-3 py-3">
           <div className="container d-flex justify-content-center">
             <div className="box-info">
@@ -30,9 +30,11 @@ export default function paymentSuccess() {
                   <Link to="/orders">
                     <button className="btn btn-success p-2">View Orders</button>
                   </Link>
-                  <button className="btn btn-secondary p-2">
-                    Continue Shopping
-                  </button>
+                  <a href="/">
+                    <button className="btn btn-secondary p-2">
+                      Continue Shopping
+                    </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -41,5 +43,5 @@ export default function paymentSuccess() {
       </div>
       <Footer />
     </div>
-  )
+  );
 }
