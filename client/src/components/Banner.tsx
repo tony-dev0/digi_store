@@ -38,7 +38,7 @@ const Banner = () => {
       ) : (
         <section className="banner_main" style={{ height: '475px' }}>
           <Carousel>
-            <Carousel.Item interval={3000}>
+            <Carousel.Item interval={5000}>
               <div className="container">
                 <div className="ca-caption">
                   <div className="row">
@@ -72,7 +72,7 @@ const Banner = () => {
                 </div>
               </div>
             </Carousel.Item>
-            <Carousel.Item interval={3000}>
+            <Carousel.Item interval={5000}>
               <div className="container">
                 <div className="ca-caption">
                   <div className="row">
