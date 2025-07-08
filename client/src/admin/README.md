@@ -58,13 +58,3 @@ anyone.
 ### Messaging and Notification
 
 <img width="1258" alt="project preview 5" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/preview5.png">
-
-## Contributing
-
-We welcome contributions from the community.
-
----
-
-Feel free to explore the codebase, test the application, and contribute to its development. If you have any questions or need assistance, please don't hesitate to reach out.
-
-Happy coding!
