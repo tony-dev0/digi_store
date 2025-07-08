@@ -1,13 +1,17 @@
-@import '/node_modules/@syncfusion/ej2-base/styles/material.css';
-@import '/node_modules/@syncfusion/ej2-buttons/styles/material.css';
-@import '/node_modules/@syncfusion/ej2-calendars/styles/material.css';
-@import '/node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
-@import '/node_modules/@syncfusion/ej2-inputs/styles/material.css';
-@import '/node_modules/@syncfusion/ej2-lists/styles/material.css';
-@import '/node_modules/@syncfusion/ej2-navigations/styles/material.css';
-@import '/node_modules/@syncfusion/ej2-popups/styles/material.css';
-@import '/node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
-@import '/node_modules/@syncfusion/ej2-react-schedule/styles/material.css';
+@import "/node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "/node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "/node_modules/@syncfusion/ej2-calendars/styles/material.css";
+@import "/node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
+@import "/node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "/node_modules/@syncfusion/ej2-lists/styles/material.css";
+@import "/node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "/node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "/node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
+@import "/node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
+
+.css-1pk1fka {
+  height: auto;
+}
 
 .css-2sr0h3-MuiFormControl-root-MuiTextField-root {
   margin-top: 16px;
@@ -254,7 +258,7 @@ header.MuiPaper-root.MuiPaper-elevation {
   box-shadow: rgba(0, 0, 0, 0.35) 3px 3px 5px;
   border-radius: 10px;
   background-color: #ffffff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   position: relative;
 }
 .revmsgbox span {
