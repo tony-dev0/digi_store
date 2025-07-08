@@ -39,7 +39,7 @@ anyone.
 
 <img width="1258" alt="project preview 3" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/preview21.png">
 
-### Product Table (CRUD)
+### Product List (CRUD)
 
 <img width="1258" alt="project preview 4" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/preview3.png">
 
