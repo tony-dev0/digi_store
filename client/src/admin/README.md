@@ -49,15 +49,15 @@ anyone.
 
 ### Events Page
 
-<img width="1258" alt="project preview 5" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/preview4.png">
+<img width="1258" alt="project preview 5" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/preview6.png">
 
-### Mange Orders (close/remove)
+### Manage Orders (close/remove)
 
-<img width="1258" alt="project preview 6" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/preview5.png">
+<img width="1258" alt="project preview 6" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/preview4.png">
 
 ### Messaging and Notification
 
-<img width="1258" alt="project preview 5" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/preview6.png">
+<img width="1258" alt="project preview 5" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/preview5.png">
 
 ## Contributing
 
