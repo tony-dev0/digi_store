@@ -51,7 +51,7 @@ anyone.
 
 <img width="1258" alt="project preview 5" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/preview6.png">
 
-### Manage Orders (close/remove)
+### Manage Orders
 
 <img width="1258" alt="project preview 6" src="https://github.com/tony-dev0/digi_store/blob/main/client/public/screenshots/preview4.png">
 
