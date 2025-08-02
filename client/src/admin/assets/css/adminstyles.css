@@ -9,10 +9,9 @@
 @import "/node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
 @import "/node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
 
-.css-1pk1fka {
+.css-1pk1fka, .css-7152t5 {
   height: 3.5rem !important;
 }
-
 .css-2sr0h3-MuiFormControl-root-MuiTextField-root {
   margin-top: 16px;
   margin-bottom: 8px;
