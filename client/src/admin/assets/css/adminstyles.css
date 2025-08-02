@@ -10,7 +10,7 @@
 @import "/node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
 
 .css-1pk1fka {
-  height: auto;
+  height: auto !important;
 }
 
 .css-2sr0h3-MuiFormControl-root-MuiTextField-root {
