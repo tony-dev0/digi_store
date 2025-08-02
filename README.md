@@ -1,4 +1,4 @@
-# Digi Store (Ecommerce Website)
+# Digi Store (E-commerce Website)
 
 An online store which allows customers to search a product, add to
 cart, wishlist or save items of choice and make payments easily.
