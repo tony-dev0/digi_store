@@ -19,39 +19,43 @@ export const Header = () => {
       {displaycart ? (
         <header>
           <div className="header">
-            <_Navbar />
+            <section>
+              <_Navbar />
+            </section>
           </div>
         </header>
       ) : (
         <header>
           {" "}
           <div className="header">
-            <Navbar expand="lg" className="navbar-dark">
-              <Container fluid>
-                <Navbar.Brand href="#">
-                  <img src={logo} alt="" className="logo-image" />
-                </Navbar.Brand>
-                <Navbar.Toggle aria-controls="navbarScroll" />
-                <Navbar.Collapse id="navbarScroll">
-                  <Nav className="navbar-nav me-auto mb-4 mb-lg-0">
-                    <li className="nav-item mt-20px">
-                      <Nav.Link href="/">Home</Nav.Link>
-                    </li>
-                    <li className="nav-item mt-20px">
-                      <Nav.Link href="/#about">About</Nav.Link>
-                    </li>
-                    <li className="nav-item mt-20px">
-                      <Nav.Link href="/products">Products</Nav.Link>
-                    </li>
-                    <li className="nav-item mt-20px">
-                      <Nav.Link href="/#contact">Contact Us</Nav.Link>{" "}
-                    </li>
-                  </Nav>
-                  <div className="mx-3"></div>
-                  <Search />
-                </Navbar.Collapse>
-              </Container>
-            </Navbar>
+            <section>
+              <Navbar expand="lg" className="navbar-dark">
+                <Container fluid>
+                  <Navbar.Brand href="#">
+                    <img src={logo} alt="" className="logo-image" />
+                  </Navbar.Brand>
+                  <Navbar.Toggle aria-controls="navbarScroll" />
+                  <Navbar.Collapse id="navbarScroll">
+                    <Nav className="navbar-nav me-auto mb-4 mb-lg-0">
+                      <li className="nav-item mt-20px">
+                        <Nav.Link href="/">Home</Nav.Link>
+                      </li>
+                      <li className="nav-item mt-20px">
+                        <Nav.Link href="/#about">About</Nav.Link>
+                      </li>
+                      <li className="nav-item mt-20px">
+                        <Nav.Link href="/products">Products</Nav.Link>
+                      </li>
+                      <li className="nav-item mt-20px">
+                        <Nav.Link href="/#contact">Contact Us</Nav.Link>{" "}
+                      </li>
+                    </Nav>
+                    <div className="mx-3"></div>
+                    <Search />
+                  </Navbar.Collapse>
+                </Container>
+              </Navbar>
+            </section>
           </div>
         </header>
       )}

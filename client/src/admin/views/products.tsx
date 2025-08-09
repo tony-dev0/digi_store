@@ -323,9 +323,8 @@ export default function Products() {
           )}
         </div>
       </section>
-
       <section className="top_items py-5" id="product">
-        <h2 className="mb-3 ms-2">Mobile/tablet and Laptop</h2>
+        <h2 className="mb-3 ms-2">mail </h2>
         <div className="wrapper-contain-item">
           {productLoading ? (
             <ProductCardSkeleton count={8} />

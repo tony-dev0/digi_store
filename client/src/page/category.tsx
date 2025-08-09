@@ -64,22 +64,24 @@ export default function Category() {
     <>
       <Header />
       <div className="categories-wrapper">
-        <div className="categories">
-          <ul className="categories-list">
-            <li className="list">
-              <b>All Categories&nbsp; | </b>
-            </li>
-            {featuredProduct &&
-              featuredProduct.map((fp: { name: string }, i: any) => {
-                let ref = "/products/category/" + fp.name.toLowerCase();
-                return (
-                  <li className="list" key={i}>
-                    <Link to={ref}>{fp.name}</Link>
-                  </li>
-                );
-              })}
-          </ul>
-        </div>
+        <section>
+          <div className="categories">
+            <ul className="categories-list">
+              <li className="list">
+                <b>All Categories&nbsp; | </b>
+              </li>
+              {featuredProduct &&
+                featuredProduct.map((fp: { name: string }, i: any) => {
+                  let ref = "/products/category/" + fp.name.toLowerCase();
+                  return (
+                    <li className="list" key={i}>
+                      <Link to={ref}>{fp.name}</Link>
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+        </section>
       </div>
       {categoryResult.length < 1 ? (
         <section className="py-5 search_result d-flex justify-content-center align-items-center bg-white">
