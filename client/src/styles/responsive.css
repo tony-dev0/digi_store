@@ -369,16 +369,12 @@
     display: none;
   }
 }
-@media (min-width: 992px) and (max-width: 1279px) {
+@media (min-width: 992px) {
   .mtl {
     width: 20%;
   }
 }
-@media (min-width: 1280px) {
-  .mtl {
-    width: 14%;
-  }
-}
+
 @media (min-width: 992px) and (max-width: 1199px) {
   .col-lg-8_5 {
     flex: 0 0 auto;
