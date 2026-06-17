@@ -44,8 +44,7 @@ export const mailClient = async (req,res) => {
   if (!flag) {
       return res.status(500).json("you can't use both recipient field and multiple txt field choose one")
   }
-  
-  
+    
   if (message.includes("{name}") && !name)
   {
       return res.status(500).json("name used in template but name field empty");

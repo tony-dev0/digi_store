@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import PrivateLayout from "./components/PrivateLayout";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminPrivateRoute from "./components/AdminPrivateRoute";
 import Overview from "./admin/views/overview";
 import Users from "./admin/views/users";
 import Products from "./admin/views/products";
@@ -27,6 +28,7 @@ import AddressBook from "./page/address-book";
 import EditAddress from "./page/edit-address";
 import NewsletterPreference from "./page/newsletter-preference";
 import AdminLayout from "./admin/layouts/AdminLayout";
+import { AdminLogin } from "./admin/pages/AdminLogin";
 import AllProducts from "./page/products";
 import ViewProduct from "./admin/views/subviews/ViewProduct";
 import SearchOrder from "./admin/views/search-order";
@@ -76,24 +78,27 @@ function App() {
           <Route path="/payment-cancel" element={<PaymentError />} />
         </Route>
         {/* admin area */}
-        <Route element={<AdminLayout />}>
-          <Route
-            path="/admin"
-            element={<Navigate to="/admin/overview" replace />}
-          />
-          <Route
-            path="/admin/dashboard"
-            element={<Navigate to="/admin/overview" replace />}
-          />
-          <Route path="/admin/overview" element={<Overview />} />
-          <Route path="/admin/users" element={<Users />} />
-          <Route path="/admin/products" element={<Products />} />
-          <Route path="/admin/orders" element={<ManageOrders />} />
-          <Route path="/admin/orders/search/:id" element={<SearchOrder />} />
-          <Route path="/admin/products/desc/:id" element={<ViewProduct />} />
-          <Route path="/admin/messages" element={<Messages />} />
-          <Route path="/admin/calender" element={<Calender />} />
-          <Route path="/admin/site-settings" element={<SiteSettings />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route element={<AdminPrivateRoute />}>
+          <Route element={<AdminLayout />}>
+            <Route
+              path="/admin"
+              element={<Navigate to="/admin/overview" replace />}
+            />
+            <Route
+              path="/admin/dashboard"
+              element={<Navigate to="/admin/overview" replace />}
+            />
+            <Route path="/admin/overview" element={<Overview />} />
+            <Route path="/admin/users" element={<Users />} />
+            <Route path="/admin/products" element={<Products />} />
+            <Route path="/admin/orders" element={<ManageOrders />} />
+            <Route path="/admin/orders/search/:id" element={<SearchOrder />} />
+            <Route path="/admin/products/desc/:id" element={<ViewProduct />} />
+            <Route path="/admin/messages" element={<Messages />} />
+            <Route path="/admin/calender" element={<Calender />} />
+            <Route path="/admin/site-settings" element={<SiteSettings />} />
+          </Route>
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>

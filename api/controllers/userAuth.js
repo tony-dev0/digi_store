@@ -8,6 +8,7 @@ const options = {
   month: "2-digit",
   day: "2-digit",
 };
+
 const formatedDate = new Intl.DateTimeFormat("en-GB", options).format(date);
 
 //find user by email
@@ -56,7 +57,7 @@ export const login = async (req, res, next) => {
 
     const isPasswordCorrect = await bcrypt.compare(
       String(req.body.password),
-      user.password
+      user.password,
     );
     if (!isPasswordCorrect)
       return res.json({
@@ -67,6 +68,7 @@ export const login = async (req, res, next) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT, {
       expiresIn: "1h",
     });
+
     const { password, ...otherDetails } = user._doc;
     res
       .cookie("_actok", token, {

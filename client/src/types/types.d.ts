@@ -74,6 +74,7 @@ interface userStateType {
   city: string | null;
   delivery_address: string | null;
   other_info: string | null;
+  role: "user" | "admin";
   createdAt: string;
 }
 interface productSliceType {

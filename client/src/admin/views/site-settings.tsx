@@ -1,7 +1,7 @@
 export default function SiteSettings() {
   return (
     <div>
-      <div className="container">
+      {/* <div className="container">
         <div className="title-head-user mt-2 mb-3">
           {' '}
           <p>Site Settings</p>{' '}
@@ -47,7 +47,7 @@ export default function SiteSettings() {
           magni repudiandae possimus, laborum quam exercitationem porro
           temporibus est placeat odio unde
         </p>
-      </div>
+      </div> */}
     </div>
-  )
+  );
 }
