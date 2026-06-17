@@ -1,58 +1,58 @@
-import { Box, Fab, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
-import CircularProgress from '@mui/material/CircularProgress'
-import { Check, Delete, Save } from '@mui/icons-material'
-import { green } from '@mui/material/colors'
-import Modal from '@mui/material/Modal'
-import toast, { Toaster } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
-import axios from 'axios'
-import { deleteUser, updateUser } from '../../redux/admin/adminSlice'
+import { Box, Fab, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Check, Delete, Save } from "@mui/icons-material";
+import { green } from "@mui/material/colors";
+import Modal from "@mui/material/Modal";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { deleteUser, updateUser } from "../../redux/admin/adminSlice";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '0.5px solid #000',
+  bgcolor: "background.paper",
+  border: "0.5px solid #000",
   boxShadow: 24,
   p: 4,
-}
+};
 
 export const SaveAction = ({ params, rowId, setRowId }: any) => {
-  const dispatch = useDispatch()
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async () => {
-    const { id } = params
-    setLoading(true)
+    const { id } = params;
+    setLoading(true);
     setTimeout(async () => {
       axios.put(`/api/users/${id}`, params.row).then((res: any) => {
-        if (res.statusText !== 'OK') {
-          toast.error(res.message)
-          return
+        if (res.statusText !== "OK") {
+          toast.error(res.message);
+          return;
         }
-        setSuccess(true)
-        toast.success('Updated row successfully')
-        setRowId(null)
-      })
-      setLoading(false)
-      dispatch(updateUser(params.row))
-    }, 2000)
-  }
+        setSuccess(true);
+        toast.success("Updated row successfully");
+        setRowId(null);
+      });
+      setLoading(false);
+      dispatch(updateUser(params.row));
+    }, 2000);
+  };
 
   useEffect(() => {
-    if (rowId === params.id && success) setSuccess(false)
-  }, [rowId])
+    if (rowId === params.id && success) setSuccess(false);
+  }, [rowId]);
 
   return (
     <Box
       sx={{
         m: 1,
-        position: 'relative',
+        position: "relative",
       }}
     >
       {success ? (
@@ -62,7 +62,7 @@ export const SaveAction = ({ params, rowId, setRowId }: any) => {
             width: 40,
             height: 40,
             bgcolor: green[500],
-            '&hover': { bgcolor: green[700] },
+            "&hover": { bgcolor: green[700] },
           }}
         >
           <Check />
@@ -85,7 +85,7 @@ export const SaveAction = ({ params, rowId, setRowId }: any) => {
           size={52}
           sx={{
             color: green[500],
-            position: 'absolute',
+            position: "absolute",
             top: -6,
             left: -6,
             zIndex: 1,
@@ -93,41 +93,40 @@ export const SaveAction = ({ params, rowId, setRowId }: any) => {
         />
       )}
     </Box>
-  )
-}
+  );
+};
 
 export const DeleteAction = ({ params }: any) => {
-  const dispatch = useDispatch()
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-  const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    const { id } = params
-    setLoading(true)
+    const { id } = params;
+    setLoading(true);
     setTimeout(async () => {
       axios.delete(`/api/users/${id}`).then((res: any) => {
-        if (res.statusText !== 'OK') {
-          console.log(res.message)
-          return
+        if (res.statusText !== "OK") {
+          console.log(res.message);
+          return;
         } else {
-          toast.success('User deleted successfully')
+          toast.success("User deleted successfully");
         }
-      })
-      setLoading(false)
-      handleClose()
-      dispatch(deleteUser(id))
-    }, 1500)
-  }
+      });
+      setLoading(false);
+      handleClose();
+      dispatch(deleteUser(id));
+    }, 1500);
+  };
 
   return (
     <>
-      <Toaster position="top-right" />
       <Box
         sx={{
           m: 1,
-          position: 'relative',
+          position: "relative",
         }}
       >
         <Fab
@@ -167,10 +166,10 @@ export const DeleteAction = ({ params }: any) => {
                 {loading ? (
                   <CircularProgress
                     size={15}
-                    sx={{ color: '#fff', marginRight: '10px' }}
+                    sx={{ color: "#fff", marginRight: "10px" }}
                   />
                 ) : (
-                  ''
+                  ""
                 )}
                 Confirm Delete
               </button>
@@ -179,5 +178,5 @@ export const DeleteAction = ({ params }: any) => {
         </Modal>
       </Box>
     </>
-  )
-}
+  );
+};
