@@ -66,14 +66,14 @@ export const login = async (req, res, next) => {
       });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT, {
-      expiresIn: "1h",
+      expiresIn: "7d",
     });
 
     const { password, ...otherDetails } = user._doc;
     res
       .cookie("_actok", token, {
-        //   maxAge: 1000 * 60 * 60 * 24,
-        httpOnly: true, //use secure: true before hosting (https)
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
       })
       .status(200)
       .json({ login: true, details: { ...otherDetails } });
@@ -87,9 +87,17 @@ export const google = async (req, res, next) => {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
       console.log("user found");
-      const token = jwt.sign({ id: user._id }, process.env.JWT);
+      const token = jwt.sign({ id: user._id }, process.env.JWT, {
+        expiresIn: "7d",
+      });
       const { password: pass, ...rest } = user._doc;
-      res.cookie("_actok", token, { httpOnly: true }).status(200).json(rest);
+      res
+        .cookie("_actok", token, {
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+          httpOnly: true,
+        })
+        .status(200)
+        .json(rest);
     } else {
       console.log("tryng to generate password for user");
       const generatedPassword =
@@ -106,9 +114,17 @@ export const google = async (req, res, next) => {
       });
       console.log("user almost saved");
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT);
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT, {
+        expiresIn: "7d",
+      });
       const { password, ...rest } = newUser._doc;
-      res.cookie("_actok", token, { httpOnly: true }).status(200).json(rest);
+      res
+        .cookie("_actok", token, {
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+          httpOnly: true,
+        })
+        .status(200)
+        .json(rest);
       console.log("completed operatiion");
     }
   } catch (error) {
