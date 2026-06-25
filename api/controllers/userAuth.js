@@ -16,7 +16,7 @@ const REFRESH_TOKEN_MAX_AGE = 3 * 24 * 60 * 60 * 1000;
 const COOKIE_OPTIONS = {
   httpOnly: true,
   sameSite: "lax",
-  secure: process.env.NODE_ENV === "production",
+  secure: true,
 };
 
 const signAccessToken = (userId) =>
