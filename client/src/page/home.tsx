@@ -25,12 +25,14 @@ export const Home = () => {
     axios
       .get("/api/products")
       .then((res) => {
-        dispatch(storeProducts(res.data));
+        const payload = Array.isArray(res.data) ? res.data : [];
+        dispatch(storeProducts(payload));
         setloadScreen(false);
       })
       .catch((error) => {
         console.log(`Backend Error: ${error}`);
-        setloadScreen(false); // Hide loader even if error
+        dispatch(storeProducts([]));
+        setloadScreen(false);
       });
   }, []);
 

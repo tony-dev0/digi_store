@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import PrivateLayout from "./components/PrivateLayout";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminPrivateRoute from "./components/AdminPrivateRoute";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { logOut } from "./redux/user/userSlice";
 import Overview from "./admin/views/overview";
 import Users from "./admin/views/users";
 import Products from "./admin/views/products";
@@ -41,10 +44,85 @@ import Calender from "./admin/views/calender";
 import Category from "./page/category";
 import ManageOrders from "./admin/views/orders";
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-axios.defaults.withCredentials = true;
-
 function App() {
+  const dispatch = useDispatch();
+  // const apiBaseURL = (import.meta.env.VITE_API_URL || "/").replace(/\/$/, "");
+  const apiBaseURL = import.meta.env.VITE_API_URL;
+
+  axios.defaults.baseURL = apiBaseURL;
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    let isRefreshing = false;
+    const failedQueue: Array<{
+      resolve: () => void;
+      reject: (reason?: unknown) => void;
+    }> = [];
+
+    const processQueue = (error?: unknown) => {
+      failedQueue.forEach((promise) => {
+        if (error) {
+          promise.reject(error);
+        } else {
+          promise.resolve();
+        }
+      });
+      failedQueue.length = 0;
+    };
+
+    const interceptor = axios.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalRequest = error.config as {
+          _retry?: boolean;
+          url?: string;
+        };
+
+        if (
+          error.response?.status === 401 &&
+          error.response?.data?.message === "TokenNotValid" &&
+          !originalRequest._retry &&
+          !originalRequest.url?.includes("/api/auth/refresh-token")
+        ) {
+          if (isRefreshing) {
+            return new Promise((resolve, reject) => {
+              failedQueue.push({
+                resolve: () => resolve(axios(originalRequest)),
+                reject,
+              });
+            });
+          }
+
+          originalRequest._retry = true;
+          isRefreshing = true;
+
+          try {
+            await axios.post("/api/auth/refresh-token");
+            processQueue();
+            return axios(originalRequest);
+          } catch (refreshError) {
+            processQueue(refreshError);
+            dispatch(logOut());
+            return Promise.reject(refreshError);
+          } finally {
+            isRefreshing = false;
+          }
+        }
+
+        if (
+          error.response?.status === 401 &&
+          error.response?.data?.message === "TokenNotValid"
+        ) {
+          dispatch(logOut());
+        }
+
+        return Promise.reject(error);
+      },
+    );
+
+    return () => axios.interceptors.response.eject(interceptor);
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
       <Toaster position="top-right" toastOptions={{ duration: 4000 }} />

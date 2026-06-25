@@ -10,21 +10,85 @@ const options = {
 };
 
 const formatedDate = new Intl.DateTimeFormat("en-GB", options).format(date);
+const ACCESS_TOKEN_MAX_AGE = 15 * 60 * 1000;
+const REFRESH_TOKEN_MAX_AGE = 3 * 24 * 60 * 60 * 1000;
 
-//find user by email
-export const findemail = async (req, res, next) => {
-  const newUser = new User(req.body);
-  const finduser = await User.findOne({ email: newUser.email });
-  if (finduser == "") {
-    res.json("user not found");
-  } else {
-    res.json(finduser);
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  sameSite: "lax",
+  secure: process.env.NODE_ENV === "production",
+};
+
+const signAccessToken = (userId) =>
+  jwt.sign({ id: userId }, process.env.JWT, {
+    expiresIn: process.env.ACCESS_EXPIRES || "15m",
+  });
+
+const signRefreshToken = (userId) =>
+  jwt.sign({ id: userId }, process.env.JWT, {
+    expiresIn: process.env.REFRESH_EXPIRES || "3d",
+  });
+
+const setAuthCookies = (res, accessToken, refreshToken) => {
+  res.cookie("_actok", accessToken, {
+    ...COOKIE_OPTIONS,
+    maxAge: ACCESS_TOKEN_MAX_AGE,
+  });
+  res.cookie("_rftok", refreshToken, {
+    ...COOKIE_OPTIONS,
+    maxAge: REFRESH_TOKEN_MAX_AGE,
+  });
+};
+
+const clearAuthCookies = (res) => {
+  res.clearCookie("_actok", COOKIE_OPTIONS);
+  res.clearCookie("_rftok", COOKIE_OPTIONS);
+};
+
+// --- Validation helpers ---
+const isValidEmail = (email) => {
+  if (!email) return false;
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(String(email).toLowerCase());
+};
+
+const validateRegisterInput = (body) => {
+  const errors = [];
+  const username = body.username && String(body.username).trim();
+  const email = body.email && String(body.email).trim();
+  const password = body.password && String(body.password);
+  const phone = body.phone && String(body.phone).trim();
+
+  if (!username || username.length < 3) {
+    errors.push("username must be at least 3 characters");
   }
-  next();
+  if (!email || !isValidEmail(email)) {
+    errors.push("invalid email address");
+  }
+  if (!password || password.length < 6) {
+    errors.push("password must be at least 6 characters");
+  }
+  if (phone && !/^\+?\d{7,15}$/.test(phone)) {
+    errors.push("invalid phone number");
+  }
+  return errors ? errors[0] : null;
+};
+
+const validateLoginInput = (body) => {
+  const errors = [];
+  const email = body.email && String(body.email).trim();
+  const password = body.password && String(body.password);
+  if (!email || !isValidEmail(email)) errors.push("invalid email address");
+  if (!password) errors.push("password is required");
+  return errors ? errors[0] : null;
 };
 
 // Register
 export const register = async (req, res, next) => {
+  const validationError = validateRegisterInput(req.body);
+  if (validationError) {
+    return res.status(400).json({ message: validationError });
+  }
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(String(req.body.password), salt);
 
@@ -40,9 +104,9 @@ export const register = async (req, res, next) => {
   try {
     if (!finduser) {
       const result = await User.insertMany([newUser]);
-      return res.json(result[0]._id);
+      return res.status(200).json(result[0]._id);
     } else {
-      throw new Error("Email already exist");
+      return res.status(400).json({ message: "User already exists" });
     }
   } catch (err) {
     next(err);
@@ -51,32 +115,38 @@ export const register = async (req, res, next) => {
 
 // Login
 export const login = async (req, res, next) => {
+  const validationError = validateLoginInput(req.body);
+  if (validationError) {
+    return res.status(400).json({ message: validationError });
+  }
   try {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.json({ login: false, msg: "user not found" });
+    const email = String(req.body.email).trim().toLowerCase();
+    const user = await User.findOne({ email });
+    if (!user)
+      return res
+        .status(400)
+        .json({ message: "email or password is incorrect" });
 
     const isPasswordCorrect = await bcrypt.compare(
       String(req.body.password),
       user.password,
     );
     if (!isPasswordCorrect)
-      return res.json({
-        login: false,
-        msg: "username or password is incorrect",
+      return res.status(400).json({
+        message: "email or password is incorrect",
       });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT, {
-      expiresIn: "7d",
-    });
+    const accessToken = signAccessToken(user._id);
+    const refreshToken = signRefreshToken(user._id);
+    const hashedRefreshToken = bcrypt.hashSync(refreshToken, 10);
+
+    user.refreshTokens = [hashedRefreshToken];
+    await user.save();
 
     const { password, ...otherDetails } = user._doc;
-    res
-      .cookie("_actok", token, {
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-      })
-      .status(200)
-      .json({ login: true, details: { ...otherDetails } });
+
+    setAuthCookies(res, accessToken, refreshToken);
+    res.status(200).json({ login: true, details: { ...otherDetails } });
   } catch (err) {
     next(err);
   }
@@ -84,22 +154,20 @@ export const login = async (req, res, next) => {
 
 export const google = async (req, res, next) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const email = String(req.body.email).trim().toLowerCase();
+    const user = await User.findOne({ email });
     if (user) {
-      console.log("user found");
-      const token = jwt.sign({ id: user._id }, process.env.JWT, {
-        expiresIn: "7d",
-      });
+      const accessToken = signAccessToken(user._id);
+      const refreshToken = signRefreshToken(user._id);
+      const hashedRefreshToken = bcrypt.hashSync(refreshToken, 10);
+
+      user.refreshTokens = [hashedRefreshToken];
+      await user.save();
+
       const { password: pass, ...rest } = user._doc;
-      res
-        .cookie("_actok", token, {
-          maxAge: 7 * 24 * 60 * 60 * 1000,
-          httpOnly: true,
-        })
-        .status(200)
-        .json(rest);
+      setAuthCookies(res, accessToken, refreshToken);
+      res.status(200).json(rest);
     } else {
-      console.log("tryng to generate password for user");
       const generatedPassword =
         Math.random().toString(36).slice(-9) +
         Math.random().toString(36).slice(-9);
@@ -108,63 +176,131 @@ export const google = async (req, res, next) => {
         username:
           req.body.name.split(" ").join("").toLowerCase() +
           Math.random().toString(36).slice(-4),
-        email: req.body.email,
+        email,
         password: hashedPassword,
         createdAt: formatedDate,
       });
-      console.log("user almost saved");
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT, {
-        expiresIn: "7d",
-      });
+      const accessToken = signAccessToken(newUser._id);
+      const refreshToken = signRefreshToken(newUser._id);
+      const hashedRefreshToken = bcrypt.hashSync(refreshToken, 10);
+
+      newUser.refreshTokens = [hashedRefreshToken];
+      await newUser.save();
+
       const { password, ...rest } = newUser._doc;
-      res
-        .cookie("_actok", token, {
-          maxAge: 7 * 24 * 60 * 60 * 1000,
-          httpOnly: true,
-        })
-        .status(200)
-        .json(rest);
-      console.log("completed operatiion");
+      setAuthCookies(res, accessToken, refreshToken);
+      res.status(200).json(rest);
     }
   } catch (error) {
     next(error);
   }
 };
 
-export const logout = async (req, res, next) => {
-  //   res.cookie('_actok', '', { maxAge: 1});
-  // res.setHeader('set-cookie','_actok=; max-age=1');
+export const refreshToken = async (req, res, next) => {
   try {
-    res.clearCookie("_actok");
+    const refreshTokenCookie = req.cookies._rftok;
+    // if token is not present in the cookie, return 401
+    if (!refreshTokenCookie) {
+      return res
+        .status(401)
+        .json({ verified: false, message: "TokenNotValid" });
+    }
+
+    const decoded = jwt.verify(refreshTokenCookie, process.env.JWT);
+    const user = await User.findById(decoded.id);
+
+    // if user is not found i.e token is invalid, clear cookies and return 401
+    if (!user) {
+      clearAuthCookies(res);
+      return res
+        .status(401)
+        .json({ verified: false, message: "TokenNotValid" });
+    }
+
+    const hasValidRefreshToken = await Promise.all(
+      (user.refreshTokens || []).map((storedToken) =>
+        bcrypt.compare(refreshTokenCookie, storedToken),
+      ),
+    ).then((results) => results.some(Boolean));
+    // the bcrypt.compare() function returns a promise, so we use Promise.all()
+    //  to wait for all comparisons to complete and
+    // then check if any of them returned true using results.some(Boolean).
+    if (!hasValidRefreshToken) {
+      user.refreshTokens = [];
+      await user.save();
+      clearAuthCookies(res);
+      return res
+        .status(401)
+        .json({ verified: false, message: "TokenNotValid" });
+    }
+    // if the refresh token is valid, generate new access and refresh tokens
+    const accessToken = signAccessToken(user._id);
+    const newRefreshToken = signRefreshToken(user._id);
+    const hashedRefreshToken = bcrypt.hashSync(newRefreshToken, 10);
+
+    user.refreshTokens = [hashedRefreshToken];
+    await user.save();
+
+    setAuthCookies(res, accessToken, newRefreshToken);
+    return res.status(200).json({ verified: true, message: "Token refreshed" });
+  } catch (error) {
+    if (error.name === "TokenNotValid") {
+      clearAuthCookies(res);
+      return res
+        .status(401)
+        .json({ verified: false, message: "TokenNotValid" });
+    }
+    next(error);
+  }
+};
+
+export const logout = async (req, res, next) => {
+  try {
+    const refreshTokenCookie = req.cookies._rftok;
+
+    if (refreshTokenCookie) {
+      try {
+        const decoded = jwt.verify(refreshTokenCookie, process.env.JWT);
+        const user = await User.findById(decoded.id);
+        if (user) {
+          user.refreshTokens = [];
+          await user.save();
+        }
+      } catch (error) {
+        // ignore invalid refresh token on logout
+      }
+    }
+
+    clearAuthCookies(res);
     res.status(200).json("You have been logged out");
   } catch (error) {
     next(error);
   }
 };
-export const verifyuser = (req, res, next) => {
+
+export const verifyToken = (req, res, next) => {
   const token = req.cookies._actok;
-  if (!token) {
-    return res.json({ valid: false });
-  }
+  if (!token)
+    return res.status(401).json({ verified: false, message: "TokenNotValid" });
 
   jwt.verify(token, process.env.JWT, (err, user) => {
-    if (err) return res.json({ valid: false });
-    // res.json({valid: true, user: user}); // dont use this check old template for verifyUser
-
-    // if (user.id === req.params.id) { res.json({valid: true, user: user.name}); }
-    // else { res.json({valid: true, user: "theodore"}); }
+    if (err) {
+      return res
+        .status(401)
+        .json({ verified: false, message: "TokenNotValid" });
+    }
+    req.userId = user.id;
     next();
   });
 };
 
-//   export const verifyUser = (req, res, next) => {
-//     verifyToken(req, res, next, () => {
-//       if (req.user.id === req.params.id) {
-//         next();
-//       } else {
-//         return next(createError(403, "You are not authorized!"));
-//       }
-//     });
-//   };
-// admin
+export const authorize = (roles) => {
+  return async (req, res, next) => {
+    const user = await User.findOne({ _id: req.userId });
+    if (!user || !roles.includes(user?.role)) {
+      return res.status(403).json({ message: "You don't have the permission" });
+    }
+    next();
+  };
+};

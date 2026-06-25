@@ -1,48 +1,53 @@
-import axios from 'axios'
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import logo from '../assets/images/logo14.png'
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import logo from "../assets/images/logo14.png";
 import {
   signInFailure,
   signInStart,
   signInSuccess,
-} from '../redux/user/userSlice'
-import OAuth from '../components/OAuth'
+  resetError,
+} from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 export const Login = () => {
-  const { loading, error } = useSelector((state: any) => state.user)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { loading, error } = useSelector((state: any) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(resetError());
+  }, []);
+
   const [values, setValues] = useState({
-    email: '',
-    password: '',
-  })
+    email: "",
+    password: "",
+  });
+
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [e.target.name]: [e.target.value] })
-  }
+    setValues({ ...values, [e.target.name]: [e.target.value] });
+  };
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     axios
-      .post('/api/auth/login', values)
+      .post("/api/auth/login", values)
       .then((res) => {
-        dispatch(signInStart())
-        if (res.data.login) {
-          setTimeout(() => {
-            dispatch(signInSuccess(res.data.details))
-          }, 2000)
-          setTimeout(() => {
-            navigate('/')
-          }, 2500)
-        } else {
-          dispatch(signInFailure(res.data.msg))
-        }
+        dispatch(signInStart());
+        setTimeout(() => {
+          dispatch(signInSuccess(res.data.details));
+        }, 2000);
+        setTimeout(() => {
+          navigate("/");
+        }, 2500);
       })
       .catch((err) => {
-        console.log(`Internal Err: ${err.message}`)
-        dispatch(signInFailure(err.message))
-      })
-  }
+        console.log(err);
+        dispatch(
+          signInFailure(err?.response?.data?.message || err?.response?.data),
+        );
+      });
+  };
   return (
     <>
       <section className="authsec">
@@ -83,7 +88,7 @@ export const Login = () => {
                 </div>
                 <div className="inputBox">
                   <button type="submit">
-                    {loading ? 'Logging in...' : 'Login'}
+                    {loading ? "Logging in..." : "Login"}
                   </button>
                 </div>
                 <OAuth />
@@ -93,5 +98,5 @@ export const Login = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};

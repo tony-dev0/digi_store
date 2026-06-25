@@ -2,11 +2,10 @@ import { cur } from "../currency.js";
 
 export const MainProductsComponent: React.FC<ProductsProps> = ({
   product,
-  index,
   addItem,
 }) => {
   return (
-    <div className="item mtl mtl_box" key={index}>
+    <div>
       <a href={`/desc/${product._id}`}>
         <div className="img-wrapper">
           <img src={product.photos[0]} alt="" />

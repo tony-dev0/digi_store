@@ -8,6 +8,7 @@ import { MainProductsComponent } from "../components/MainProductsComponent";
 
 export const Featured = () => {
   const { loader, products } = useSelector((state: any) => state.product);
+  const safeProducts = Array.isArray(products) ? products : [];
   return (
     <>
       <section className="featured py-5" id="featured">
@@ -15,10 +16,12 @@ export const Featured = () => {
         <div id="main_row">
           {loader
             ? "loading..."
-            : products.map((product: Itemtype, i: any) => {
+            : safeProducts.map((product: Itemtype, i: any) => {
                 if (product.category == "featured") {
                   return (
-                    <FeaturedProductsComponent index={i} product={product} />
+                    <div className="wrap" key={i}>
+                      <FeaturedProductsComponent product={product} />
+                    </div>
                   );
                 }
               })}
@@ -29,6 +32,7 @@ export const Featured = () => {
 };
 export const Topitems = () => {
   const { loader, products } = useSelector((state: any) => state.product);
+  const safeProducts = Array.isArray(products) ? products : [];
   let limit = 0;
   return (
     <>
@@ -37,10 +41,15 @@ export const Topitems = () => {
         <div className="list_top_items">
           {loader
             ? "loading..."
-            : products.map((product: Itemtype, i: any) => {
+            : safeProducts.map((product: Itemtype, i: any) => {
                 if (product.category == "top" && limit < 6) {
                   limit++;
-                  return <TopProductsComponent index={i} product={product} />;
+
+                  return (
+                    <div className="item" key={i}>
+                      <TopProductsComponent product={product} />
+                    </div>
+                  );
                 }
               })}
         </div>
@@ -50,6 +59,7 @@ export const Topitems = () => {
 };
 export const Limitedstocks = () => {
   const { loader, products } = useSelector((state: any) => state.product);
+  const safeProducts = Array.isArray(products) ? products : [];
   let limit = 0;
   return (
     <>
@@ -58,11 +68,13 @@ export const Limitedstocks = () => {
         <div className="list_top_items">
           {loader
             ? "loading..."
-            : products.map((product: Itemtype, i: any) => {
+            : safeProducts.map((product: Itemtype, i: any) => {
                 if (product.category == "limited" && limit < 6) {
                   limit++;
                   return (
-                    <LimitedProductsComponent index={i} product={product} />
+                    <div className="item" key={i}>
+                      <LimitedProductsComponent product={product} />
+                    </div>
                   );
                 }
               })}
@@ -73,6 +85,7 @@ export const Limitedstocks = () => {
 };
 export const Maingadget = () => {
   const { loader, products } = useSelector((state: any) => state.product);
+  const safeProducts = Array.isArray(products) ? products : [];
   const dispatch = useDispatch();
   const addItem = (item: Itemtype) => {
     dispatch(addItemToCart({ ...item, quantity: 1 }));
@@ -85,14 +98,15 @@ export const Maingadget = () => {
         <div className="wrapper-container">
           {loader
             ? "loading..."
-            : products.map((product: Itemtype, i: any) => {
+            : safeProducts.map((product: Itemtype, i: any) => {
                 if (product.category == "com") {
                   return (
-                    <MainProductsComponent
-                      index={i}
-                      product={product}
-                      addItem={() => addItem(product)}
-                    />
+                    <div className="item mtl mtl_box" key={i}>
+                      <MainProductsComponent
+                        product={product}
+                        addItem={() => addItem(product)}
+                      />
+                    </div>
                   );
                 }
               })}

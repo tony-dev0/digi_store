@@ -37,7 +37,7 @@ interface TabletypeGrid {
   createdAt: string;
 }
 interface ProductsProps {
-  index: number;
+  // index: number;
   product: Itemtype;
   addItem?: () => void;
 }

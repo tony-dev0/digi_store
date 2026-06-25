@@ -1,28 +1,27 @@
 import express from "express";
-import { login, register, google, findemail, logout, verifyuser } from "../controllers/userAuth.js";
+import rateLimiter from "express-rate-limit";
+import {
+  login,
+  register,
+  google,
+  logout,
+  refreshToken,
+} from "../controllers/userAuth.js";
 
 const router = express.Router();
-
-router.post("/login", login);
+const loginLimiter = rateLimiter({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5,
+  message: "Too many login attempts, please try again later",
+});
+router.post("/login", loginLimiter, login);
 
 router.post("/register", register);
 
 router.post("/google", google);
 
-router.get('/findemail', findemail);
+router.post("/logout", logout);
 
-router.post('/logout', logout);
-
-router.get("/checkauth", verifyuser);
-
-// *******auth user********
-// delete self
-// update self info
-
-// ***********admin only**********
-// delete a user
-// update a user info
-// get all users
-// find a user
+router.post("/refresh-token", refreshToken);
 
 export default router;
