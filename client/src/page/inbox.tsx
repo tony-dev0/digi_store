@@ -19,9 +19,9 @@ export default function Inbox() {
           setData(res.data);
         }
       })
-      .catch((err: any) => {
+      .catch((_: any) => {
         toast.error("An error occurred");
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 

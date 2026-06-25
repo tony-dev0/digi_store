@@ -1,35 +1,35 @@
-import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
-import google from '../assets/images/google.png'
-import { app } from '../firebase'
-import { useDispatch } from 'react-redux'
-import { signInSuccess } from '../redux/user/userSlice'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import google from "../assets/images/google.png";
+import { app } from "../firebase";
+import { useDispatch } from "react-redux";
+import { signInSuccess } from "../redux/user/userSlice";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function OAuth() {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleGoogleClick = async () => {
     try {
-      const provider = new GoogleAuthProvider()
-      const auth = getAuth(app)
+      const provider = new GoogleAuthProvider();
+      const auth = getAuth(app);
 
-      const result = await signInWithPopup(auth, provider)
+      const result = await signInWithPopup(auth, provider);
       const body = {
         name: result.user.displayName,
         email: result.user.email,
-      }
+      };
       axios
-        .post('/api/auth/google', body)
+        .post("/api/auth/google", body)
         .then((res) => {
-          dispatch(signInSuccess(res.data))
-          navigate('/')
+          dispatch(signInSuccess(res.data));
+          navigate("/");
         })
-        .catch((err) => console.log('Server ERR: ', err))
-    } catch (error) {
-      console.log('could not sign in with google', error)
+        .catch((_) => console.log("Server AUTH ERR"));
+    } catch (_) {
+      // console.log('could not sign in with google', error)
     }
-  }
+  };
   return (
     <div className="inputBox">
       <button
@@ -41,5 +41,5 @@ export default function OAuth() {
         <span className="ms-2"> Continue with Google </span>
       </button>
     </div>
-  )
+  );
 }

@@ -45,9 +45,9 @@ export default function RecievedMessages() {
           setOpen(false);
           toast.success("Message deleted successfully");
         })
-        .catch((err) => {
+        .catch((_) => {
           toast.error("An error occured");
-          console.log(err);
+          // console.log(err);
           setOpen(false);
           return;
         });

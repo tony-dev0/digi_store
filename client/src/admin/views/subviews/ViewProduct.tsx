@@ -33,7 +33,7 @@ export default function ViewProduct() {
   const params = useParams();
   const [active, setActive] = useState(0);
   let specifiedProduct = products.find(
-    (product: { _id: any }) => product._id === params.id
+    (product: { _id: any }) => product._id === params.id,
   );
   const [open, setOpen] = useState(false);
   const openModal = () => setOpen(true);
@@ -206,7 +206,7 @@ export default function ViewProduct() {
     setTimeout(async () => {
       axios.delete(`/api/products/${id}`).then((res: any) => {
         if (res.statusText !== "OK") {
-          console.log(res.message);
+          // console.log(res.message);
           toast.error("Delete action failed");
           return;
         } else {
@@ -286,8 +286,8 @@ export default function ViewProduct() {
           }, 15000);
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((_) => {
+        // console.log(error);
         setLoading(false);
         setError("root", {
           message: "backend error",

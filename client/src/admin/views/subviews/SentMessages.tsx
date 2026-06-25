@@ -57,7 +57,7 @@ export default function SentMessages() {
       .then(() => {
         dispatch(removeRecipient(obj));
         toast.success(
-          "Action Confirmed. recipient will no longer see this notification"
+          "Action Confirmed. recipient will no longer see this notification",
         );
       })
       .catch(() => {
@@ -75,9 +75,9 @@ export default function SentMessages() {
           setOpen(false);
           toast.success("Message deleted successfully");
         })
-        .catch((err) => {
+        .catch((_) => {
           toast.error("An error occured");
-          console.log(err);
+          // console.log(err);
           setOpen(false);
           return;
         });

@@ -26,7 +26,7 @@ export default function AllProducts() {
   const totalProducts = realProducts.length;
   const currentProducts = realProducts.slice(
     indexofFirstProduct,
-    indexofLastProduct
+    indexofLastProduct,
   );
   const addItem = (item: Itemtype) => {
     dispatch(addItemToCart({ ...item, quantity: 1 }));
@@ -47,7 +47,6 @@ export default function AllProducts() {
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-  console.log(realProducts);
   return (
     <>
       <Header />
@@ -99,11 +98,12 @@ export default function AllProducts() {
               ? "loading..."
               : currentProducts.map((product: Itemtype, i: any) => {
                   return (
-                    <MainProductsComponent
-                      index={i}
-                      product={product}
-                      addItem={() => addItem(product)}
-                    />
+                    <div className="item mtl" key={i}>
+                      <MainProductsComponent
+                        product={product}
+                        addItem={() => addItem(product)}
+                      />
+                    </div>
                   );
                 })}
           </div>

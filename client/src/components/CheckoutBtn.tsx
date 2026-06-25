@@ -32,7 +32,7 @@ export const CheckoutBtn: React.FC<CheckoutBtnProps> = ({
         amount: totalAmount,
       })
       .then((res: any) => {
-        console.log(res.data);
+        // console.log(res.data);
         return stripe?.redirectToCheckout({
           sessionId: res.data.id,
         });

@@ -47,7 +47,7 @@ export const Register: React.FC = () => {
         navigate("/login");
       })
       .catch((error) => {
-        console.log(error.response.data.message);
+        // console.log(error.response.data.message);
         setError("root", { message: error.response.data.message });
       });
   };

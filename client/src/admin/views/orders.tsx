@@ -63,9 +63,9 @@ export default function Orders() {
       .then((res: any) => {
         dispatch(storeOrders(res.data.reverse()));
       })
-      .catch((err) => {
+      .catch((_) => {
         toast.error("An error occurred");
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 
@@ -97,8 +97,8 @@ export default function Orders() {
             toast.success("deleted successfully");
           }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((_) => {
+          // console.log(err);
           toast.error("failed to delete order");
           setLoading(false);
         });
@@ -114,8 +114,8 @@ export default function Orders() {
           dispatch(closeOrder(id));
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((_) => {
+        // console.log(err);
         toast.error("failed to close order");
       });
   };

@@ -211,8 +211,8 @@ export default function EmailClient() {
       },
     };
   }, [cloud, isLayoutReady]);
-  const onChangeInEditor = (event: any, editor: any) => {
-    console.log(event);
+  const onChangeInEditor = (_: any, editor: any) => {
+    // console.log(event);
     const data = editor.getData();
     setmsgData(data);
   };
@@ -268,7 +268,7 @@ export default function EmailClient() {
       })
       .catch((err) => {
         setLoading(false);
-        console.log("ERR - ", err);
+        // console.log("ERR - ", err);
         if (err.response) {
           err.response.data.length < 45
             ? toast.error(err.response.data)

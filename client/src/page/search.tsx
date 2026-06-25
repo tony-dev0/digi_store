@@ -34,7 +34,7 @@ export default function Search() {
   const indexofFirstProduct = indexofLastProduct - productsPerPage;
   const currentProducts = searchResult.slice(
     indexofFirstProduct,
-    indexofLastProduct
+    indexofLastProduct,
   );
   const totalProducts = searchResult.length;
 
@@ -133,11 +133,12 @@ export default function Search() {
               ? "loading"
               : currentProducts.map((product: Itemtype, i: any) => {
                   return (
-                    <MainProductsComponent
-                      index={i}
-                      product={product}
-                      addItem={() => addItem(product)}
-                    />
+                    <div className="item mtl" key={i}>
+                      <MainProductsComponent
+                        product={product}
+                        addItem={() => addItem(product)}
+                      />
+                    </div>
                   );
                 })}
           </div>

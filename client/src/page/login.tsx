@@ -42,7 +42,7 @@ export const Login = () => {
         }, 2500);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         dispatch(
           signInFailure(err?.response?.data?.message || err?.response?.data),
         );

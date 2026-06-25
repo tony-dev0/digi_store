@@ -29,8 +29,8 @@ export const Home = () => {
         dispatch(storeProducts(payload));
         setloadScreen(false);
       })
-      .catch((error) => {
-        console.log(`Backend Error: ${error}`);
+      .catch((_) => {
+        // console.log(`Backend Error: ${error}`);
         dispatch(storeProducts([]));
         setloadScreen(false);
       });

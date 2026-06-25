@@ -23,7 +23,7 @@ export default function Cart() {
   const publickey = import.meta.env.VITE_PAYSTACK_PUBLISH_KEY;
   const dispatch = useDispatch();
   const { items, totalQuantity, totalAmount } = useSelector(
-    (state: any) => state.cart
+    (state: any) => state.cart,
   );
   const { currentUser } = useSelector((state: any) => state.user);
   function filterArr(originalArray: Itemtype[]) {
@@ -42,8 +42,8 @@ export default function Cart() {
         quantity: totalQuantity,
         amount: totalAmount,
       })
-      .then((res: any) => {
-        console.log(res.data);
+      .then((_: any) => {
+        // console.log(res.data);
         navigate("/payment-success");
       })
       .catch((error) => window.alert(error?.message));
@@ -54,8 +54,8 @@ export default function Cart() {
     email: currentUser?.email,
     publicKey: publickey,
     text: "Checkout " + cur.format(totalAmount),
-    onSuccess: (reference: any) => {
-      console.log("Payment successful!", reference);
+    onSuccess: (_: any) => {
+      // console.log("Payment successful!", reference);
       addOrder();
     },
     onClose: () => {

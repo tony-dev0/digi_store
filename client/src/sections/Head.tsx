@@ -11,10 +11,10 @@ const Head = () => {
       let realpath = "";
       if (hash.startsWith("#")) {
         realpath = hash.replace("#", "");
-        console.log("realpath ", realpath);
+        // console.log("realpath ", realpath);
         const element = document.getElementById(realpath);
         if (element) {
-          console.log("element");
+          // console.log("element");
           element.scrollIntoView({ behavior: "smooth" });
         }
       }

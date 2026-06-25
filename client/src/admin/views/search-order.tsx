@@ -24,9 +24,9 @@ export default function Orders() {
       .then((res: any) => {
         setData(res.data.reverse());
       })
-      .catch((err) => {
+      .catch((_) => {
         toast.error("An error occurred");
-        console.log(err);
+        // console.log(err);
       });
   }, []);
   return (

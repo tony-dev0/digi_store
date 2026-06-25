@@ -257,8 +257,8 @@ export default function Products() {
           }, 5000);
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((_) => {
+        // console.log(error);
         setloading(false);
         setError("root", {
           message: "backend error",
@@ -286,7 +286,9 @@ export default function Products() {
             products.map((product: Itemtype, i: any) => {
               if (product.category == "featured") {
                 return (
-                  <FeaturedProductsComponent index={i} product={product} />
+                  <div className="wrap" key={i}>
+                    <FeaturedProductsComponent product={product} />
+                  </div>
                 );
               }
             })
@@ -302,7 +304,11 @@ export default function Products() {
           ) : (
             products.map((product: Itemtype, i: any) => {
               if (product.category == "top") {
-                return <TopProductsComponent index={i} product={product} />;
+                return (
+                  <div className="item mtl" key={i}>
+                    <TopProductsComponent product={product} />
+                  </div>
+                );
               }
             })
           )}
@@ -317,7 +323,11 @@ export default function Products() {
           ) : (
             products.map((product: Itemtype, i: any) => {
               if (product.category == "limited") {
-                return <LimitedProductsComponent index={i} product={product} />;
+                return (
+                  <div className="item mtl" key={i}>
+                    <LimitedProductsComponent product={product} />
+                  </div>
+                );
               }
             })
           )}
@@ -331,7 +341,12 @@ export default function Products() {
           ) : (
             products.map((product: Itemtype, i: any) => {
               if (product.category == "com") {
-                return <MainProductsComponent index={i} product={product} />;
+                return (
+                  <div className="item mtl" key={i}>
+                    {" "}
+                    <MainProductsComponent product={product} />{" "}
+                  </div>
+                );
               }
             })
           )}

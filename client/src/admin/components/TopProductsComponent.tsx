@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
 import { cur } from "../../currency.js";
-export const TopProductsComponent: React.FC<ProductsProps> = ({
-  index,
-  product,
-}) => {
+export const TopProductsComponent: React.FC<ProductsProps> = ({ product }) => {
   return (
-    <div className="item mtl" key={index}>
+    <>
       <Link to={`/admin/products/desc/${product?._id}`}>
         <div className="img-wrapper">
           <img src={product?.photos[0]} alt="" />
@@ -42,6 +39,6 @@ export const TopProductsComponent: React.FC<ProductsProps> = ({
           </button>
         </Link>
       </div>
-    </div>
+    </>
   );
 };

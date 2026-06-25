@@ -54,8 +54,8 @@ export default function AdminLayout() {
       await axios.post("/api/auth/logout");
       dispatch(signOutUserSuccess());
       navigate("/admin/login");
-    } catch (error) {
-      console.log("Logout error:", error);
+    } catch (_) {
+      // console.log("Logout error:", error);
       // Still navigate to login even if logout API fails
       dispatch(signOutUserSuccess());
       navigate("/admin/login");
@@ -69,8 +69,8 @@ export default function AdminLayout() {
         dispatch(storeProducts(p.data));
         setproductLoader(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((_) => {
+        // console.log(error);
       });
 
     axios
@@ -78,8 +78,8 @@ export default function AdminLayout() {
       .then((u) => {
         dispatch(storeUsers(u.data));
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((_) => {
+        // console.log(error);
       });
   }, []);
 

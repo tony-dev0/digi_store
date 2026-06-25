@@ -36,7 +36,7 @@ export default function Category() {
   const indexofFirstProduct = indexofLastProduct - productsPerPage;
   const currentProducts = categoryResult.slice(
     indexofFirstProduct,
-    indexofLastProduct
+    indexofLastProduct,
   );
   const totalProducts = categoryResult.length;
 
@@ -131,11 +131,12 @@ export default function Category() {
               ? "loading"
               : currentProducts.map((product: Itemtype, i: any) => {
                   return (
-                    <MainProductsComponent
-                      index={i}
-                      product={product}
-                      addItem={() => addItem(product)}
-                    />
+                    <div className="item mtl" key={i}>
+                      <MainProductsComponent
+                        product={product}
+                        addItem={() => addItem(product)}
+                      />
+                    </div>
                   );
                 })}
           </div>

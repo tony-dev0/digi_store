@@ -37,8 +37,8 @@ export default function Overview() {
         settotalData(res.data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(`Backend Error: ${error}`);
+      .catch((_) => {
+        // console.log(`Backend Error: ${error}`);
       });
   }, []);
   return (
@@ -57,8 +57,8 @@ export default function Overview() {
                         i == 0
                           ? "2px solid #cef9dd"
                           : i == 1
-                          ? "2px solid #dfdeff"
-                          : "2px solid #f0cece",
+                            ? "2px solid #dfdeff"
+                            : "2px solid #f0cece",
                       borderRadius: "10px",
                       backgroundColor: "#f2f2f2",
                       boxShadow: "rgba(0,0,0,0.35) 0px 5px 15px",
